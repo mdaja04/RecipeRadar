@@ -10,6 +10,8 @@
     display: flex;
     left: 1rem;
     top: 2rem;
+    margin-left: 10px;
+
 }
 
 .home-button-container:hover{
@@ -22,7 +24,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    background-color: #fcba03; /* White background */
+    background-color: #fcba03;
     border-radius: 50%; /* Circular button */
     width: 40px; /* Button size */
     height: 40px; /* Button size */

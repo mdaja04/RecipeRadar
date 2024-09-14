@@ -6,12 +6,12 @@
     cursor: pointer;
     border: none;
     background-color: white;
+    border-radius: 20px;
     display: flex;
     left: 1rem;
     top: 2rem;
     font-family: "Poppins", sans-serif;
     font-weight: 600;
-    font-size: 15;
 }
 
 .create-recipe-button-container:hover{

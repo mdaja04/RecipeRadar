@@ -1,0 +1,26 @@
+.create-recipe-button-container{
+    width:120px;
+    height:50px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    display: flex;
+    left: 1rem;
+    top: 2rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 15;
+}
+
+.create-recipe-button-container:hover{
+    background-color: rgb(240,240,240);
+    transition: background-color 1s;
+}
+
+
+
+
+
+

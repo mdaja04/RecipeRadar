@@ -1,0 +1,22 @@
+
+.recipe-radar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #fcba03;
+    border-radius: 50%; /* Circular button */
+    width: 50px; /* Button size */
+    height: 50px; /* Button size */
+    transition: background-color 0.3s, box-shadow 0.3s;
+    font-size: 1.5rem; /* Icon size */
+
+}
+
+
+.recipe-radar-logo-icon {
+    color: #333; /* Icon color */
+}
+
+
+

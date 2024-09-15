@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 const CreateRecipeButton = () => {
     return (
 
-        <button className="create-recipe-button-container">
-            <div className="create-recipe-button">
-                Create
+        <Link to="/create-recipe">
+            <div className="create-recipe-button-container">
+                <div className="create-recipe-button">
+                    Create
+                </div>
             </div>
-        </button>
+        </Link>
     );
 };
 

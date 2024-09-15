@@ -1,6 +1,10 @@
 import React from 'react';
 import './SignUp.css'
 import RecipeRadarLogo from "../components/RecipeRadarLogo.jsx";
+import ReactDOM from 'react-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+
 
 const SignUp = () => {
 
@@ -20,11 +24,14 @@ const SignUp = () => {
                     <label className="password-label">Re-enter Password</label>
                     <input type="password" className="re-enter-password-input" placeholder="Re-enter Password" required/>
 
-                    <button className="sign-up-button">Sign Up</button>
+                    <button className="continue-button">Continue</button>
                 </div>
                 <div className="or-container">
                     <span>Or continue with</span>
-                    <button className="google-sign-in">Google</button>
+                    <button className="google-sign-in">
+                        <FontAwesomeIcon icon={faGoogle}/>
+                        Google
+                    </button>
                 </div>
 
             </div>

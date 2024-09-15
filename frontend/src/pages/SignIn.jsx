@@ -1,6 +1,8 @@
 import React from 'react';
 import './SignIn.css'
 import RecipeRadarLogo from "../components/RecipeRadarLogo.jsx";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 
 const SignIn = () => {
 
@@ -22,7 +24,12 @@ const SignIn = () => {
                 </div>
                 <div className="or-container">
                     <span>Or continue with</span>
-                    <button className="google-sign-in">Google</button>
+                    <button className="google-sign-in">
+                        <div className="font-awesome-google">
+                            <FontAwesomeIcon icon={faGoogle}/>
+                        </div>
+                        Google
+                    </button>
                 </div>
 
             </div>

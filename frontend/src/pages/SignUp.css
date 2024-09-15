@@ -79,7 +79,7 @@
 }
 
 
-.sign-up-button {
+.continue-button {
     width: 100%;
     max-width: 350px;
     height: 50px;
@@ -98,7 +98,7 @@
     transition: background-color 0.3s ease;
 }
 
-.sign-up-button:hover {
+.continue-button:hover {
     background-color: rgb(222, 172, 58);
 }
 
@@ -144,4 +144,6 @@
     font-size: 0.9rem;
 }
 
-
+.google-sign-in{
+    color: #505050;
+}

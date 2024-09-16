@@ -35,7 +35,6 @@ build/
 # Ignore macOS system files
 .DS_Store
 
-# Ignore JetBrains IDE (IntelliJ/WebStorm) files
 .idea/
 
-# Ignore target folder (for Maven projects)
+backend/target/

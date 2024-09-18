@@ -1,4 +1,4 @@
-package com.reciperadar.models;
+package com.example.reciperadar.entities;
 
 import java.util.List;
 import java.time.LocalDate;

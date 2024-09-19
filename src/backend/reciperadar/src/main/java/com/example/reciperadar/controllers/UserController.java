@@ -1,5 +1,6 @@
 package com.example.reciperadar.controllers;
 
+import com.example.reciperadar.entities.User;
 import com.example.reciperadar.services.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,5 +16,10 @@ public class UserController {
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    @PostMapping
+    public void  registerNewUser(@RequestBody User user){
+        userService.addNewUser(user);
     }
 }

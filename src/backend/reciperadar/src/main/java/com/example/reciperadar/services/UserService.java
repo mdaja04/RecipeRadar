@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.example.reciperadar.repositories.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -16,4 +17,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    public void addNewUser(User user) {
+        Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser.isPresent()){
+            throw new IllegalStateException("Email already in use");
+        }
+        userRepository.save(user);
+    }
 }

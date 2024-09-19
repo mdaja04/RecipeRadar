@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -27,4 +29,18 @@ public class UserController {
     public void deleteUser(@PathVariable("userId") Long userId){
         userService.deleteUser(userId);
     }
+
+    @PutMapping(path="/{userId}")
+    public void updateUser(
+            @PathVariable("userId") Long userId,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String surname,
+            @RequestParam(required = false) String profileImageURL,
+            @RequestParam(required = false) Boolean publicProfile,
+            @RequestParam(required = false) LocalDate dob,
+            @RequestParam(required = false) String email) {
+        userService.updateUser(userId, name, username, email, surname, profileImageURL, publicProfile, dob);
+    }
+
 }

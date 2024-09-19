@@ -1,12 +1,15 @@
 package com.example.reciperadar.services;
 
 import com.example.reciperadar.entities.User;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.example.reciperadar.repositories.UserRepository;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,6 +36,46 @@ public class UserService {
             );
         }
         userRepository.deleteById(userId);
+
+    }
+
+    @Transactional
+    public void updateUser(Long userId, String name, String username, String email, String surname, String profileImageURL, Boolean publicProfile, LocalDate dob) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalStateException("user with id " + userId + " doesn't exist"));
+
+        if (name != null && !name.isEmpty() && !Objects.equals(user.getName(),name)){
+            user.setName(name);
+        }
+
+        if (surname != null && !surname.isEmpty() && !Objects.equals(user.getSurname(),surname)){
+            user.setSurname(surname);
+        }
+
+        if (email != null && !email.isEmpty() && !Objects.equals(user.getEmail(),email)){
+            Optional<User> existingUser = userRepository.findByEmail(email);
+            if (existingUser.isPresent()){
+                throw new IllegalStateException("Email is already in use");
+            }
+            user.setEmail(email);
+        }
+        if (username != null && !username.isEmpty() && !Objects.equals(user.getUsername(),username)){
+            Optional<User> existingUser = userRepository.findByUsername(username);
+            if (existingUser.isPresent()){
+                throw new IllegalStateException("Username is already in use");
+            }
+            user.setUsername(username);
+        }
+        if (profileImageURL != null && !profileImageURL.isEmpty() && !Objects.equals(user.getProfileImageUrl(),profileImageURL)){
+            user.setProfileImageUrl(profileImageURL);
+        }
+
+        if(publicProfile!=null){
+            user.setPublicProfile(publicProfile);
+        }
+
+        if (dob != null) {
+            user.setDob(dob);
+        }
 
     }
 }

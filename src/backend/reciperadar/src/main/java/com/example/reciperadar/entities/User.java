@@ -2,6 +2,7 @@ package com.example.reciperadar.entities;
 
 import jakarta.persistence.*;
 
+import java.time.Period;
 import java.util.List;
 import java.time.LocalDate;
 
@@ -26,23 +27,26 @@ public class User {
     private String email;
     private String password;
     private LocalDate dob;
+
+    @Transient
     private Integer age;
     private String profileImageUrl;
     private Boolean publicProfile;
 
-    public User() {
-    }
 
-    public User(String username, String name, String surname, String email, String password, LocalDate dob, Integer age, String profileImageUrl, Boolean publicProfile) {
+    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile) {
         this.username = username;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.dob = dob;
-        this.age = age;
         this.profileImageUrl = profileImageUrl;
         this.publicProfile = publicProfile;
+    }
+
+    public User() {
+
     }
 
     public Long getId() {
@@ -102,7 +106,7 @@ public class User {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(this.dob,LocalDate.now()).getYears();
     }
 
     public void setAge(Integer age) {

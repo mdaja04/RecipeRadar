@@ -1,9 +1,24 @@
 package com.example.reciperadar.entities;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 import java.time.LocalDate;
 
+
+@Entity
+@Table
 public class User {
+    @Id
+    @SequenceGenerator(
+            name = "user_sequence",
+            sequenceName = "user_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "user_sequence"
+    )
     private Long id;
     private String username;
     private String name;
@@ -14,6 +29,9 @@ public class User {
     private Integer age;
     private String profileImageUrl;
     private Boolean publicProfile;
+
+    public User() {
+    }
 
     public User(String username, String name, String surname, String email, String password, LocalDate dob, Integer age, String profileImageUrl, Boolean publicProfile) {
         this.username = username;

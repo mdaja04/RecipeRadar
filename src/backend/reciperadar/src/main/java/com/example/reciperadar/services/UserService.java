@@ -24,4 +24,15 @@ public class UserService {
         }
         userRepository.save(user);
     }
+
+    public void deleteUser(Long userId) {
+        boolean userExists = userRepository.existsById(userId);
+        if(!userExists){
+            throw new IllegalStateException(
+                    "User with id " + userId + " does not exist"
+            );
+        }
+        userRepository.deleteById(userId);
+
+    }
 }

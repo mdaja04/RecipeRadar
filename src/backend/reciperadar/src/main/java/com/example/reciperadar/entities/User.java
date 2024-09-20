@@ -1,15 +1,28 @@
 package com.example.reciperadar.entities;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Period;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.time.LocalDate;
+
+@Getter
+@Setter
+@EqualsAndHashCode
 
 
 @Entity
 @Table
-public class User {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -33,8 +46,15 @@ public class User {
     private String profileImageUrl;
     private Boolean publicProfile;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole userRole;
 
-    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile) {
+    private boolean locked;
+
+    private boolean enabled;
+
+
+    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile, UserRole userRole, boolean locked, boolean enabled) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -43,6 +63,9 @@ public class User {
         this.dob = dob;
         this.profileImageUrl = profileImageUrl;
         this.publicProfile = publicProfile;
+        this.userRole = userRole;
+        this.locked = locked;
+        this.enabled = enabled;
     }
 
     public User() {
@@ -59,6 +82,26 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 
     public void setUsername(String username) {
@@ -87,6 +130,12 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
+        return Collections.singletonList(authority);
     }
 
     public String getPassword() {

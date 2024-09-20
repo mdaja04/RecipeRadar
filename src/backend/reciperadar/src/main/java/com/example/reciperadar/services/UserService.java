@@ -2,7 +2,11 @@ package com.example.reciperadar.services;
 
 import com.example.reciperadar.entities.User;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.example.reciperadar.repositories.UserRepository;
@@ -13,7 +17,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class UserService {
+//@AllArgsConstructor
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     @Autowired
     public UserService(UserRepository userRepository) {
@@ -77,5 +82,10 @@ public class UserService {
             user.setDob(dob);
         }
 
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()-> new UsernameNotFoundException("User with email " + email + " not found"));
     }
 }

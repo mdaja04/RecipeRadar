@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Collection;
 import java.util.Collections;
@@ -21,7 +22,7 @@ import java.time.LocalDate;
 
 
 @Entity
-@Table
+@Table(name = "users")
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(
@@ -34,10 +35,13 @@ public class User implements UserDetails {
             generator = "user_sequence"
     )
     private Long id;
+    @Column(unique = true,nullable = false)
     private String username;
     private String name;
     private String surname;
+    @Column(unique = true,nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
     private LocalDate dob;
 
@@ -52,6 +56,14 @@ public class User implements UserDetails {
     private boolean locked;
 
     private boolean enabled;
+
+    @Column(name="verification_code")
+    private String verificationCode;
+
+    @Column(name="verification_expiration")
+    private LocalDateTime verificationCodeExpiresAt;
+
+
 
 
     public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile, UserRole userRole, boolean locked, boolean enabled) {
@@ -69,7 +81,6 @@ public class User implements UserDetails {
     }
 
     public User() {
-
     }
 
     public Long getId() {
@@ -91,7 +102,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return true;
     }
 
     @Override

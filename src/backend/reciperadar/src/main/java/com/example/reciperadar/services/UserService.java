@@ -17,7 +17,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-//@AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     @Autowired

@@ -1,0 +1,84 @@
+.more-options-container{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    background-color: white;
+    display: flex;
+    left: 1rem;
+    top: 2rem;
+}
+
+.more-options-container:hover{
+    background-color: rgb(240,240,240);
+    transition: background-color 1s;
+}
+
+.more-options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 40px; /* Button size */
+    height: 40px; /* Button size */
+    font-size: 1.5rem; /* Icon size */
+    background-color: yellow;
+}
+
+
+
+
+/* Container for the dropdown button and menu */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Button to toggle the dropdown */
+.dropdown-button {
+    background-color: #fcba03;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 5px;
+    background-color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Dropdown menu items */
+.dropdown-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.dropdown-menu ul li {
+    padding: 10px 20px;
+}
+
+.dropdown-menu ul li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.dropdown-menu ul li:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+}

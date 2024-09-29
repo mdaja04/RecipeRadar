@@ -24,6 +24,7 @@ const FinalPageSignUp = () => {
             username
         };
         try {
+            console.log(userData);
             // Send registration data to the backend
             const response = await fetch('http://localhost:8080/auth/signup', {
                 method: 'POST',
@@ -36,7 +37,7 @@ const FinalPageSignUp = () => {
             if (response.ok) {
                 // Registration successful
                 alert('Registration completed successfully');
-                navigate('/login'); // Redirect to login page
+                navigate('/verify'); // Redirect to login page
             } else {
                 // Registration failed
                 const errorData = await response.json();

@@ -2,6 +2,7 @@ package com.example.reciperadar.controllers;
 
 import com.example.reciperadar.dto.LoginUserDto;
 import com.example.reciperadar.dto.RegisterUserDto;
+import com.example.reciperadar.dto.UserResponseDto;
 import com.example.reciperadar.dto.VerifyUserDto;
 import com.example.reciperadar.entities.User;
 import com.example.reciperadar.responses.LoginResponse;
@@ -9,6 +10,9 @@ import com.example.reciperadar.services.AuthenticationService;
 import com.example.reciperadar.services.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -25,10 +29,21 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto){
+    public ResponseEntity<UserResponseDto> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
-        return ResponseEntity.ok(registeredUser);
+
+        // Map the `User` entity to `UserResponseDto`
+        UserResponseDto responseDto = new UserResponseDto(
+                registeredUser.getId(),
+                registeredUser.getUsername(),
+                registeredUser.getEmail()
+        );
+
+        return ResponseEntity.ok(responseDto);
     }
+
+
+
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto){
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
@@ -36,6 +51,9 @@ public class AuthenticationController {
         LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
         return ResponseEntity.ok(loginResponse);
     }
+
+
+
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto){

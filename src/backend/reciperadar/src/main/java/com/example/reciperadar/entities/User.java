@@ -50,8 +50,7 @@ public class User implements UserDetails {
     private String profileImageUrl;
     private Boolean publicProfile;
 
-    @Enumerated(EnumType.STRING)
-    private UserRole userRole;
+
 
     private boolean locked;
 
@@ -66,7 +65,7 @@ public class User implements UserDetails {
 
 
 
-    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile, UserRole userRole, boolean locked, boolean enabled) {
+    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile,  boolean locked, boolean enabled) {
         this.username = username;
         this.name = name;
         this.surname = surname;
@@ -75,7 +74,6 @@ public class User implements UserDetails {
         this.dob = dob;
         this.profileImageUrl = profileImageUrl;
         this.publicProfile = publicProfile;
-        this.userRole = userRole;
         this.locked = locked;
         this.enabled = enabled;
     }
@@ -151,8 +149,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
-        return Collections.singletonList(authority);
+        return List.of();
     }
 
     public String getPassword() {

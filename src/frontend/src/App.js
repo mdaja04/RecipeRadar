@@ -1,16 +1,20 @@
-import './App.css';
-import CreateRecipe from "./pages/CreateRecipe.jsx";
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Header from "./components/Header.jsx";
-import Home from './pages/Home.jsx'
-import FinalPageSignUp from "./pages/FinalPageSignUp.jsx";
+import SignUp from './pages/SignUp';
+import FinalPageSignUp from './pages/FinalPageSignUp';
+import HomePage from './pages/Home';
 
-function App() {
-
-  return (
-      <FinalPageSignUp></FinalPageSignUp>
-
-  );
-}
+const App = () => {
+    return (
+        <Router>
+            <Routes>
+                <Route path="/signup" element={<SignUp />} />  {/* Corrected the path */}
+                <Route path="/signup-complete" element={<FinalPageSignUp />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="*" element={<div>Page Not Found</div>} />
+            </Routes>
+        </Router>
+    );
+};
 
 export default App;

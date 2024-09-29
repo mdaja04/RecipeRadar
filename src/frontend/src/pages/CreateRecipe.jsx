@@ -17,7 +17,6 @@ const SignIn = () => {
                     <label className="password-label">Password</label>
                     <input type="password" className="password-input" placeholder="Enter Password" required />
 
-                    <a href="#" className="forgot-password">Forgot Password?</a>
 
                     <button className="sign-in-button">Sign In</button>
                 </div>
@@ -28,7 +27,6 @@ const SignIn = () => {
                 </div>
             </div>
 
-            <p>Don't have an account? <a href="#">Sign up here</a></p>
         </div>
     );
 };

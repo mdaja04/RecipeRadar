@@ -16,9 +16,9 @@ function MoreOptions() {
             {isOpen && (
                 <div className="dropdown-menu">
                     <ul>
-                        <li><a>Favourites</a></li>
-                        <li><a>Shopping List</a></li>
-                        <li><a>Logout</a></li>
+                        <li><p>Favourites</p></li>
+                        <li><p>Shopping List</p></li>
+                        <li><p>Logout</p></li>
                     </ul>
                 </div>
             )}

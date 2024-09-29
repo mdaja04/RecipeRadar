@@ -40,3 +40,4 @@ build/
 backend/target/
 
 .env
+

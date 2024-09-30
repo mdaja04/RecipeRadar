@@ -37,8 +37,11 @@ const FinalPageSignUp = () => {
             if (response.ok) {
                 // Registration successful
                 alert('Registration completed successfully');
-                navigate('/verify'); // Redirect to login page
-            } else {
+                navigate('/verify', {
+                    state: { email },
+                });
+            }
+            else {
                 // Registration failed
                 const errorData = await response.json();
                 alert('Registration failed: ' + errorData.message);

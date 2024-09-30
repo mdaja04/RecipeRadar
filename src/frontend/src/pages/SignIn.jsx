@@ -26,6 +26,9 @@ const SignIn = () => {
             });
 
             if (response.ok) {
+                const responseData = await response.json();
+                localStorage.setItem("token", responseData.token);
+
                 alert('Sign in completed successfully');
                 navigate('/home');
             }

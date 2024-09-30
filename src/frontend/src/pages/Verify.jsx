@@ -30,7 +30,7 @@ const Verify = () => {
             if (response.ok) {
                 // Registration successful
                 alert('Verification completed successfully');
-                navigate('/home'); // Redirect to login page
+                navigate('/signin'); // Redirect to login page
             } else {
                 // Registration failed
                 const errorData = await response.json();

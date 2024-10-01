@@ -1,15 +1,19 @@
 import React from 'react';
 import './CreateRecipeButton.css'
+import {useNavigate} from "react-router-dom";
 const CreateRecipeButton = () => {
+    const navigate = useNavigate();
+
+    function openHome() {
+        navigate('/create-recipe');
+    }
+
     return (
-<div></div>
-        /*<Link to="/create-recipe">
-            <div className="create-recipe-button-container">
-                <div className="create-recipe-button">
-                    Create
-                </div>
-            </div>
-        </Link>*/
+        <button className="create-recipe-button-container" onClick={openHome}>
+            Create Recipe
+        </button>
+
+
     );
 };
 

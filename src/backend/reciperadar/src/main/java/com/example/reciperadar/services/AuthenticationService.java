@@ -117,7 +117,7 @@ public class AuthenticationService {
                 + "</head>"
                 + "<body>"
                 + "<div class=\"container\">"
-                + "<h2 class=\"header\">Welcome to Our App!</h2>"
+                + "<h2 class=\"header\">Welcome to RecipeRadar!</h2>"
                 + "<p style=\"font-size: 16px; text-align: center;\">Please enter the verification code below to continue:</p>"
                 + "<div class=\"content\">"
                 + "<h3 class=\"header\">Verification Code:</h3>"

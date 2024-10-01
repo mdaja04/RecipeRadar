@@ -23,16 +23,19 @@ const SignIn = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
+                credentials: "include"
             });
 
             if (response.ok) {
                 const responseData = await response.json();
-                localStorage.setItem("token", responseData.token);
 
-                alert('Sign in completed successfully');
-                navigate('/home');
-            }
-            else {
+                if (responseData.verified) {
+                    alert('Sign in completed successfully!');
+                    navigate('/home'); // Redirect to the home page after successful sign-in
+                } else {
+                    alert('Account not verified. Please verify your account.');
+                }
+            } else {
                 const errorData = await response.json();
                 alert('Sign in failed: ' + errorData.message);
             }

@@ -16,7 +16,6 @@ const SignIn = () => {
             password,
         };
         try {
-            console.log(userData);
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
                 headers: {
@@ -34,6 +33,8 @@ const SignIn = () => {
                     navigate('/home'); // Redirect to the home page after successful sign-in
                 } else {
                     alert('Account not verified. Please verify your account.');
+                    console.log('not verified');
+                    navigate('/verify');
                 }
             } else {
                 const errorData = await response.json();

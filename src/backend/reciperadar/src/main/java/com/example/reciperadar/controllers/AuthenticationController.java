@@ -8,6 +8,10 @@ import com.example.reciperadar.entities.User;
 import com.example.reciperadar.responses.LoginResponse;
 import com.example.reciperadar.services.AuthenticationService;
 import com.example.reciperadar.services.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.java.Log;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +20,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 
 public class AuthenticationController {
     private final JwtService jwtService;
@@ -45,12 +49,36 @@ public class AuthenticationController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto){
+    public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
+
+        if (!authenticatedUser.isEnabled()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
+                    "message", "Account not verified",
+                    "verified", false,
+                    "userId", authenticatedUser.getId()
+            ));
+        }
+
         String jwtToken = jwtService.generateToken(authenticatedUser);
-        LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
-        return ResponseEntity.ok(loginResponse);
+        long expirationTime = jwtService.getExpirationTime();
+
+        Cookie cookie = new Cookie("token", jwtToken);
+        //cookie.setHttpOnly(true);
+        cookie.setSecure(false); // Disable secure for local development (use true in production)
+        cookie.setPath("/");
+        cookie.setMaxAge((int) ((expirationTime - System.currentTimeMillis()) / 1000));
+
+        response.addCookie(cookie);
+
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("message", "Login successful");
+        responseBody.put("verified", true);
+        responseBody.put("expirationTime", expirationTime);
+
+        return ResponseEntity.ok(responseBody);
     }
+
 
 
 

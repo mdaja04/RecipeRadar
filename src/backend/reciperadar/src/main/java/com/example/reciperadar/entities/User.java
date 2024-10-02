@@ -1,10 +1,7 @@
 package com.example.reciperadar.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 
 
 @Entity
@@ -41,6 +40,7 @@ public class User implements UserDetails {
     private String surname;
     @Column(unique = true,nullable = false)
     private String email;
+    @Setter
     @Column(nullable = false)
     private String password;
     private LocalDate dob;
@@ -49,6 +49,8 @@ public class User implements UserDetails {
     private Integer age;
     private String profileImageUrl;
     private Boolean publicProfile;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Recipe> recipes;
 
 
 
@@ -64,40 +66,12 @@ public class User implements UserDetails {
 
 
 
-
-    public User(String username, String name, String surname, String email, String password, LocalDate dob, String profileImageUrl, Boolean publicProfile,  boolean locked, boolean enabled) {
-        this.username = username;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-        this.password = password;
-        this.dob = dob;
-        this.profileImageUrl = profileImageUrl;
-        this.publicProfile = publicProfile;
-        this.locked = locked;
-        this.enabled = enabled;
-    }
-
-    public User() {
-    }
-
     public User(String username, String email, String encode) {
         this.username = username;
         this.email = email;
         this.password = encode;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -119,78 +93,12 @@ public class User implements UserDetails {
         return enabled;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public Integer getAge() {
-        return Period.between(this.dob,LocalDate.now()).getYears();
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public String getProfileImageUrl() {
-        return profileImageUrl;
-    }
-
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
-
-    public Boolean getPublicProfile() {
-        return publicProfile;
-    }
-
-    public void setPublicProfile(Boolean publicProfile) {
-        this.publicProfile = publicProfile;
-    }
 
     @java.lang.Override
     public java.lang.String toString() {

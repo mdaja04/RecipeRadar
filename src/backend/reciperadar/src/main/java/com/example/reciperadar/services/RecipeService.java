@@ -1,14 +1,12 @@
 package com.example.reciperadar.services;
 
 import com.example.reciperadar.entities.Recipe;
-import com.example.reciperadar.entities.User;
 import com.example.reciperadar.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -26,15 +24,15 @@ public class RecipeService {
         return recipes;
     }
 
-    public void addNewRecipe(Recipe recipe) {
-        recipeRepository.save(recipe);
+    public Recipe createRecipe(Recipe recipe) {
+        return recipeRepository.save(recipe);
     }
 
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
     }
 
-    public Recipe getRecipeByIdAndUser(Long recipeId, Long userId) {
+    public Recipe getRecipeByIdAndUserId(Long recipeId, Long userId) {
         return recipeRepository.findByIdAndUserId(recipeId, userId)
                 .orElseThrow(() -> new RuntimeException("Recipe not found or not accessible by this user."));
     }

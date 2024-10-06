@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+
 public class UserController {
     private final UserService userService;
 
@@ -35,7 +38,23 @@ public class UserController {
     public ResponseEntity<List<User>> allUsers(){
         List<User> users = userService.allUsers();
         return ResponseEntity.ok(users);
+    }
 
+    @GetMapping("/my-username")
+    public ResponseEntity<Map<String, String>> getCurrentUsername() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        // Debugging Log
+        System.out.println("Authentication Object: " + authentication);
+        System.out.println("Principal: " + (authentication != null ? authentication.getPrincipal() : "null"));
+
+        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+            return ResponseEntity.status(401).body(Map.of("error", "User is not authenticated"));
+        }
+
+        // Retrieve the username from the Authentication object
+        String username = authentication.getName();
+        return ResponseEntity.ok(Map.of("username", username));
     }
 
     @PostMapping

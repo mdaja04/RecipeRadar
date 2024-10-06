@@ -7,14 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LoginResponse {
-    private Cookie cookie;
+    private String token;
     private long expiresIn;
-    private boolean isEnabled;
-    public LoginResponse(Cookie cookie, long expiresIn,boolean isEnabled){
-        this.cookie = cookie;
+
+    public LoginResponse(String token, long expiresIn) {
+        this.token = token;
         this.expiresIn = expiresIn;
-        this.isEnabled = isEnabled;
     }
-
-
 }

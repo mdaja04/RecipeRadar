@@ -11,6 +11,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recipes")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+
 public class RecipeController {
     private final RecipeService recipeService;
     private final UserService userService;
@@ -21,12 +23,13 @@ public class RecipeController {
         this.userService = userService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe, @RequestParam Long userId) {
-        recipe.setId(userId);
+    @PostMapping("/create/{username}")
+    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe, @PathVariable String username) {
+        recipe.setUser(userService.getUserByUsername(username));
         Recipe createdRecipe = recipeService.createRecipe(recipe);
         return ResponseEntity.ok(createdRecipe);
     }
+
 
     @GetMapping("/user/{username}")
     public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username) {

@@ -24,8 +24,8 @@ import java.util.Map;
 
 public class AuthenticationController {
     private final JwtService jwtService;
-    private final AuthenticationService authenticationService;
 
+    private final AuthenticationService authenticationService;
 
     public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService) {
         this.jwtService = jwtService;
@@ -33,72 +33,35 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> register(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
-
-        // Map the `User` entity to `UserResponseDto`
-        UserResponseDto responseDto = new UserResponseDto(
-                registeredUser.getId(),
-                registeredUser.getUsername(),
-                registeredUser.getEmail()
-        );
-
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(registeredUser);
     }
-
-
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody LoginUserDto loginUserDto, HttpServletResponse response) {
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto){
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
-
-        if (!authenticatedUser.isEnabled()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of(
-                    "message", "Account not verified",
-                    "verified", false,
-                    "userId", authenticatedUser.getId()
-            ));
-        }
-
         String jwtToken = jwtService.generateToken(authenticatedUser);
-        long expirationTime = jwtService.getExpirationTime();
-
-        Cookie cookie = new Cookie("token", jwtToken);
-        //cookie.setHttpOnly(true);
-        cookie.setSecure(false); // Disable secure for local development (use true in production)
-        cookie.setPath("/");
-        cookie.setMaxAge((int) ((expirationTime - System.currentTimeMillis()) / 1000));
-
-        response.addCookie(cookie);
-
-        Map<String, Object> responseBody = new HashMap<>();
-        responseBody.put("message", "Login successful");
-        responseBody.put("verified", true);
-        responseBody.put("expirationTime", expirationTime);
-
-        return ResponseEntity.ok(responseBody);
+        LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
+        return ResponseEntity.ok(loginResponse);
     }
 
-
-
-
-
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto){
-        try{
+    public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {
+        try {
             authenticationService.verifyUser(verifyUserDto);
-            return ResponseEntity.ok("Account verified");
-        }catch (RuntimeException e){
+            return ResponseEntity.ok("Account verified successfully");
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PostMapping("/resend")
-    public ResponseEntity<?> resendVerificationCode(@RequestParam String email){
-        try{
+    public ResponseEntity<?> resendVerificationCode(@RequestParam String email) {
+        try {
             authenticationService.resendVerificationCode(email);
             return ResponseEntity.ok("Verification code sent");
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -13,6 +13,8 @@ const FinalPageSignUp = () => {
     const [surname, setSurname] = useState('');
     const [username, setUsername] = useState('');
 
+
+
     // Handle form submission
     const handleCompleteSignUp = async () => {
         // Prepare the user object

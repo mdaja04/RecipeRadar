@@ -24,6 +24,7 @@ import java.io.IOException;
 @Configuration
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final HandlerExceptionResolver handlerExceptionResolver;
+
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             JwtService jwtService,
             UserDetailsService userDetailsService,
             HandlerExceptionResolver handlerExceptionResolver
-    ){
+    ) {
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.handlerExceptionResolver = handlerExceptionResolver;
@@ -51,15 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         try {
-            final String jwt = getJwtFromCookies(request);
-
-            if (jwt == null) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
+            final String jwt = authHeader.substring(7);
             final String userEmail = jwtService.extractUsername(jwt);
-
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -79,22 +73,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
-
-
         } catch (Exception exception) {
             handlerExceptionResolver.resolveException(request, response, null, exception);
         }
-    }
-
-    private String getJwtFromCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if ("token".equals(cookie.getName())) {
-                    return cookie.getValue();
-                }
-            }
-        }
-        return null;
     }
 }

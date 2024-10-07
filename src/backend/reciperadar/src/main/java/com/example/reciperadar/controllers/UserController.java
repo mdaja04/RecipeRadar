@@ -40,21 +40,23 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @GetMapping("/my-username")
-    public ResponseEntity<Map<String, String>> getCurrentUsername() {
+    @GetMapping("/id")
+    public ResponseEntity<Map<String, Object>> getCurrentUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        // Debugging Log
-        System.out.println("Authentication Object: " + authentication);
-        System.out.println("Principal: " + (authentication != null ? authentication.getPrincipal() : "null"));
-
+        // Check if the user is authenticated
         if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            return ResponseEntity.status(401).body(Map.of("error", "User is not authenticated"));
+            return ResponseEntity.status(401).body(Map.of("message", "User is not authenticated"));
         }
 
-        // Retrieve the username from the Authentication object
-        String username = authentication.getName();
-        return ResponseEntity.ok(Map.of("username", username));
+        // Get the principal object and ensure it's a UserDetails or custom User type
+        if (!(authentication.getPrincipal() instanceof User)) {
+            return ResponseEntity.status(401).body(Map.of("message", "Invalid user authentication."));
+        }
+
+        User currentUser = (User) authentication.getPrincipal();
+        // Return just the user ID or username as a simple JSON object
+        return ResponseEntity.ok(Map.of("userId", currentUser.getId(), "username", currentUser.getUsername()));
     }
 
     @PostMapping

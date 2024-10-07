@@ -10,36 +10,83 @@ const CreateRecipe = () => {
     const [recipeIngredients, setRecipeIngredients] = useState("");
     const [recipeServes, setRecipeServes] = useState(0);
     const [recipeInstructions, setRecipeInstructions] = useState("");
-    const [username, setUsername] = useState("");
+    const [currentUsername, setCurrentUsername] = useState(""); // Store the username if needed
+    const [currentUserId, setCurrentUserId] = useState(null);  // Store the user ID
 
 
     useEffect(() => {
-        const fetchUsername = async () => {
+        const fetchUserId = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/my-username", {
+                const response = await fetch("http://localhost:8080/users/me", {
                     method: 'GET',
-                    credentials: 'include', // Include credentials such as cookies in the request
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,  // Include the JWT token in Authorization header
                     },
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
-                    setUsername(data.username); // Set the username state from the response
-                } else if (response.status === 401) {
-                    alert("User is not authenticated. Please log in.");
-                    navigate("/signin");
+                    const userData = await response.json();
+                    setCurrentUserId(userData.userId);  // Set the user ID
+                    setCurrentUsername(userData.username); // Set the username if needed
                 } else {
-                    console.error("Failed to fetch username.");
+                    console.error("Failed to fetch user ID. Status:", response.status);
+                    if (response.status === 401) {
+                        alert("User is not authenticated. Redirecting to login.");
+                        navigate("/login");
+                    }
                 }
             } catch (error) {
-                console.error("Error fetching username:", error);
+                console.error("Error fetching user ID:", error);
             }
         };
 
-        fetchUsername();
+        fetchUserId();
     }, [navigate]);
+
+    const handleRecipeUpload = async (e) => {
+        e.preventDefault();
+
+        // Ensure user ID is available before creating the recipe
+        if (!currentUserId) {
+            alert("User not found. Please try again.");
+            return;
+        }
+
+        // Construct the recipe object with user ID details
+        const recipeData = {
+            user: {
+                id: currentUserId,  // Use the user ID to link the recipe
+                username: currentUsername  // Optionally include the username
+            },
+            title: recipeTitle,
+            serves: recipeServes,
+            ingredients: recipeIngredients,
+            instructions: recipeInstructions,
+        };
+
+        try {
+            // Make the request to the backend to create the recipe
+            const response = await fetch("http://localhost:8080/recipes/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`  // Include the JWT in the Authorization header
+                },
+                body: JSON.stringify(recipeData),
+            });
+
+            if (response.ok) {
+                alert('Recipe created successfully!');
+                navigate('/recipes');  // Redirect to the recipes page after successful creation
+            } else {
+                alert('Failed to create the recipe.');
+            }
+        } catch (error) {
+            console.error("Error creating recipe:", error);
+            alert("An error occurred while creating the recipe.");
+        }
+    };
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -52,48 +99,7 @@ const CreateRecipe = () => {
         }
     };
 
-    const handleRecipeUpload = async (e) => {
-        e.preventDefault();
 
-        if (!username) {
-            alert("Unable to retrieve user details. Please log in again.");
-            return;
-        }
-
-        const recipe = {
-            title: recipeTitle,
-            serves: parseInt(recipeServes, 10),
-            ingredients: recipeIngredients,
-            instructions: recipeInstructions,
-            imageUrl: imagePreview,
-        };
-
-        try {
-            const response = await fetch(`http://localhost:8080/recipes/create/${username}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: "include", // Include cookies in the request
-                body: JSON.stringify(recipe),
-            });
-
-            if (response.ok) {
-                alert('Upload completed successfully');
-                setRecipeTitle('');
-                setRecipeServes(0);
-                setRecipeIngredients('');
-                setRecipeInstructions('');
-                setImagePreview(null);
-                navigate("/home");
-            } else {
-                alert('Failed to create recipe');
-            }
-        } catch (error) {
-            console.error('Error creating recipe:', error);
-            alert('An error occurred while creating the recipe.');
-        }
-    };
 
     return (
         <div className="page-container">

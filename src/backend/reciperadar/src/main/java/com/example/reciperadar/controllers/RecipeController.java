@@ -1,13 +1,18 @@
 package com.example.reciperadar.controllers;
 
 import com.example.reciperadar.entities.Recipe;
+import com.example.reciperadar.entities.User;
 import com.example.reciperadar.services.RecipeService;
 import com.example.reciperadar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/recipes")
@@ -23,12 +28,27 @@ public class RecipeController {
         this.userService = userService;
     }
 
-    @PostMapping("/create/{username}")
-    public ResponseEntity<Recipe> createRecipe(@RequestBody Recipe recipe, @PathVariable String username) {
-        recipe.setUser(userService.getUserByUsername(username));
-        Recipe createdRecipe = recipeService.createRecipe(recipe);
-        return ResponseEntity.ok(createdRecipe);
+    @PostMapping("/create")
+    public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
+        // Get the currently authenticated user from the existing `/me` logic
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "User is not authenticated"));
+        }
+
+        // Retrieve the user from the authentication context
+        User currentUser = (User) authentication.getPrincipal();
+
+        // Associate the recipe with the current user
+        recipe.setUser(currentUser);
+
+        // Save the recipe using the RecipeService
+        Recipe savedRecipe = recipeService.createRecipe(recipe);
+
+        // Return the saved recipe object
+        return ResponseEntity.ok(savedRecipe);
     }
+
 
 
     @GetMapping("/user/{username}")

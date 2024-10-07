@@ -39,12 +39,29 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto){
-        User authenticatedUser = authenticationService.authenticate(loginUserDto);
-        String jwtToken = jwtService.generateToken(authenticatedUser);
-        LoginResponse loginResponse = new LoginResponse(jwtToken, jwtService.getExpirationTime());
-        return ResponseEntity.ok(loginResponse);
+    public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
+        try {
+            // Authenticate the user and get the authenticated user object
+            User authenticatedUser = authenticationService.authenticate(loginUserDto);
+
+            // Generate the JWT token if authentication is successful
+            String jwtToken = jwtService.generateToken(authenticatedUser);
+
+            // Return a LoginResponse object with the verified field set to true
+            return ResponseEntity.ok(new LoginResponse(jwtToken, jwtService.getExpirationTime(), true));
+
+        } catch (RuntimeException e) {
+            // If user is not verified, return a response with a verified field set to false
+            if (e.getMessage().contains("Account not verified")) {
+                return ResponseEntity.ok(new LoginResponse(null, 0, false));  // No token, not verified
+            }
+
+            // If some other error occurred (e.g., invalid credentials), return a 403 response
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new LoginResponse(null, 0, false));
+        }
     }
+
+
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {

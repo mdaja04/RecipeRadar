@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './SignIn.css'
 import RecipeRadarLogo from "../components/RecipeRadarLogo.jsx";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,11 +10,14 @@ const SignIn = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
+
+
     const handleSignIn = async () => {
         const userData = {
             email,
             password,
         };
+
         try {
             const response = await fetch('http://localhost:8080/auth/login', {
                 method: 'POST',
@@ -22,7 +25,6 @@ const SignIn = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(userData),
-                credentials: "include"
             });
 
             if (response.ok) {
@@ -30,21 +32,21 @@ const SignIn = () => {
 
                 if (responseData.verified) {
                     alert('Sign in completed successfully!');
-                    navigate('/home'); // Redirect to the home page after successful sign-in
+                    localStorage.setItem("token", responseData.token);
+                    navigate('/home');
                 } else {
                     alert('Account not verified. Please verify your account.');
-                    console.log('not verified');
                     navigate('/verify');
                 }
             } else {
-                const errorData = await response.json();
-                alert('Sign in failed: ' + errorData.message);
+                alert('Sign in failed. Please check your credentials.');
             }
         } catch (error) {
             console.error('Error during sign in:', error);
             alert('An error occurred during sign in.');
         }
     };
+
 
 
     return (

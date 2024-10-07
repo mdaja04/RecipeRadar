@@ -1,33 +1,24 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import {jwtDecode} from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';  // Correct import
 
-const getCookie = (cookieName) => {
-    const name = cookieName + "=";
-    const decodedCookie = decodeURIComponent(document.cookie);
-    const cookieArray = decodedCookie.split(';');
-
-    for (let cookie of cookieArray) {
-        cookie = cookie.trim();
-        if (cookie.startsWith(name)) {
-            return cookie.substring(name.length, cookie.length);
-        }
-    }
-    return null;
-};
-
+// Function to check if the user is authenticated
 const isAuthenticated = () => {
-    const token = getCookie("token");
+    // Get the token from localStorage
+    const token = localStorage.getItem("token");
     if (!token) return false;
 
     try {
+        // Decode the token to check its expiration
         const decodedToken = jwtDecode(token);
-        return decodedToken.exp > Date.now() / 1000;
-    } catch {
-        return false;
+        return decodedToken.exp > Date.now() / 1000;  // Return true if the token is still valid
+    } catch (error) {
+        console.error("Failed to decode JWT:", error);
+        return false;  // If decoding fails, treat it as not authenticated
     }
 };
 
+// Component to protect routes
 const ProtectedRoute = ({ children }) => {
     return isAuthenticated() ? children : <Navigate to="/signin" />;
 };

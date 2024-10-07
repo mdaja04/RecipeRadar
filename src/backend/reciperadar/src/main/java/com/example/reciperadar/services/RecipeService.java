@@ -1,11 +1,11 @@
 package com.example.reciperadar.services;
 
+import com.example.reciperadar.dto.RecipeDto;
 import com.example.reciperadar.entities.Recipe;
 import com.example.reciperadar.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,8 +24,9 @@ public class RecipeService {
         return recipes;
     }*/
 
-    public Recipe createRecipe(Recipe recipe) {
-        return recipeRepository.save(recipe);
+    public Recipe createRecipe(RecipeDto recipe) {
+        Recipe recipe1 = new Recipe(recipe.getUsername(),recipe.getTitle(), recipe.getServes(),recipe.getIngredients(),recipe.getInstructions());
+        return recipeRepository.save(recipe1);
     }
 
     public List<Recipe> getAllRecipes() {

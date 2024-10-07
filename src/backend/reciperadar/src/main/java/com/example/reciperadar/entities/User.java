@@ -1,5 +1,6 @@
 package com.example.reciperadar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +35,10 @@ public class User implements UserDetails {
             generator = "user_sequence"
     )
     private Long id;
+
+
+
+
     @Column(unique = true,nullable = false)
     private String username;
     private String name;

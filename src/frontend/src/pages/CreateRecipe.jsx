@@ -11,11 +11,10 @@ const CreateRecipe = () => {
     const [recipeServes, setRecipeServes] = useState(0);
     const [recipeInstructions, setRecipeInstructions] = useState("");
     const [currentUsername, setCurrentUsername] = useState(""); // Store the username if needed
-    const [currentUserId, setCurrentUserId] = useState(null);  // Store the user ID
 
 
     useEffect(() => {
-        const fetchUserId = async () => {
+        const fetchUsername = async () => {
             try {
                 const response = await fetch("http://localhost:8080/users/me", {
                     method: 'GET',
@@ -27,38 +26,34 @@ const CreateRecipe = () => {
 
                 if (response.ok) {
                     const userData = await response.json();
-                    setCurrentUserId(userData.userId);  // Set the user ID
                     setCurrentUsername(userData.username); // Set the username if needed
                 } else {
-                    console.error("Failed to fetch user ID. Status:", response.status);
+                    console.error("Failed to fetch username. Status:", response.status);
                     if (response.status === 401) {
                         alert("User is not authenticated. Redirecting to login.");
-                        navigate("/login");
+                        navigate("/signin");
                     }
                 }
             } catch (error) {
-                console.error("Error fetching user ID:", error);
+                console.error("Error fetching username:", error);
             }
         };
 
-        fetchUserId();
+        fetchUsername();
     }, [navigate]);
 
     const handleRecipeUpload = async (e) => {
         e.preventDefault();
 
         // Ensure user ID is available before creating the recipe
-        if (!currentUserId) {
+        if (!currentUsername) {
             alert("User not found. Please try again.");
             return;
         }
 
         // Construct the recipe object with user ID details
         const recipeData = {
-            user: {
-                id: currentUserId,  // Use the user ID to link the recipe
-                username: currentUsername  // Optionally include the username
-            },
+            username: currentUsername,
             title: recipeTitle,
             serves: recipeServes,
             ingredients: recipeIngredients,

@@ -1,5 +1,6 @@
 package com.example.reciperadar.controllers;
 
+import com.example.reciperadar.dto.RecipeDto;
 import com.example.reciperadar.entities.Recipe;
 import com.example.reciperadar.entities.User;
 import com.example.reciperadar.services.RecipeService;
@@ -29,25 +30,12 @@ public class RecipeController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<?> createRecipe(@RequestBody Recipe recipe) {
-        // Get the currently authenticated user from the existing `/me` logic
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("message", "User is not authenticated"));
-        }
-
-        // Retrieve the user from the authentication context
-        User currentUser = (User) authentication.getPrincipal();
-
-        // Associate the recipe with the current user
-        //recipe.setUser(currentUser);
-
-        // Save the recipe using the RecipeService
+    public ResponseEntity<?> createRecipe(@RequestBody RecipeDto recipe) {
+        // Save the recipe directly since username is included in the request body
         Recipe savedRecipe = recipeService.createRecipe(recipe);
-
-        // Return the saved recipe object
         return ResponseEntity.ok(savedRecipe);
     }
+
 
 
 

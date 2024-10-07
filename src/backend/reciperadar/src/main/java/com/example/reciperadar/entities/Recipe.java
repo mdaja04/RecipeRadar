@@ -1,5 +1,6 @@
 package com.example.reciperadar.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,7 +9,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "recipes")
@@ -26,6 +26,9 @@ public class Recipe {
     )
     private Long id;
 
+    private String username;  // Store the creator's username
+
+
 
     private String title;
 
@@ -36,4 +39,12 @@ public class Recipe {
 
     @Column(columnDefinition = "TEXT")
     private String instructions;
+
+    public Recipe(String username, String title, Integer serves, String ingredients, String instructions) {
+        this.username = username;
+        this.title = title;
+        this.serves = serves;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+    }
 }

@@ -40,7 +40,7 @@ public class RecipeController {
         User currentUser = (User) authentication.getPrincipal();
 
         // Associate the recipe with the current user
-        recipe.setUser(currentUser);
+        //recipe.setUser(currentUser);
 
         // Save the recipe using the RecipeService
         Recipe savedRecipe = recipeService.createRecipe(recipe);
@@ -51,7 +51,7 @@ public class RecipeController {
 
 
 
-    @GetMapping("/user/{username}")
+    /*@GetMapping("/user/{username}")
     public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username) {
         Long userId = userService.getUserIdByUsername(username); // Convert username to userId
         return ResponseEntity.ok(recipeService.allRecipesByUserId(userId));
@@ -63,6 +63,6 @@ public class RecipeController {
             @PathVariable String username) {
         Long userId = userService.getUserIdByUsername(username);
         return ResponseEntity.ok(recipeService.getRecipeByIdAndUserId(recipeId, userId));
-    }
+    }*/
 
 }

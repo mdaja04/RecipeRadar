@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
-@RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 
+@RequestMapping("/auth")
+@RestController
 public class AuthenticationController {
     private final JwtService jwtService;
 
@@ -60,8 +59,6 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new LoginResponse(null, 0, false));
         }
     }
-
-
 
     @PostMapping("/verify")
     public ResponseEntity<?> verifyUser(@RequestBody VerifyUserDto verifyUserDto) {

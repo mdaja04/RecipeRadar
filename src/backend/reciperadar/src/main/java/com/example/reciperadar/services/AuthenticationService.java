@@ -32,26 +32,22 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
         this.emailService = emailService;
     }
-    public User signup(RegisterUserDto input) {
-        Optional<User> existingUser = userRepository.findByEmail(input.getEmail());
-        if (existingUser.isPresent()) {
-            throw new RuntimeException("Email already exists.");
-        }
 
+    public User signup(RegisterUserDto input) {
         User user = new User(input.getUsername(), input.getEmail(), passwordEncoder.encode(input.getPassword()));
         user.setVerificationCode(generateVerificationCode());
         user.setVerificationCodeExpiresAt(LocalDateTime.now().plusMinutes(15));
         user.setEnabled(false);
         sendVerificationEmail(user);
-
         return userRepository.save(user);
     }
 
-    public User authenticate(LoginUserDto input){
-        User user = userRepository.findByEmail(input.getEmail()).orElseThrow(()->new RuntimeException("User not found"));
+    public User authenticate(LoginUserDto input) {
+        User user = userRepository.findByEmail(input.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        if(!user.isEnabled()){
-            throw new RuntimeException("Account not verified, please verify account");
+        if (!user.isEnabled()) {
+            throw new RuntimeException("Account not verified. Please verify your account.");
         }
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -59,9 +55,8 @@ public class AuthenticationService {
                         input.getPassword()
                 )
         );
+
         return user;
-
-
     }
     public void verifyUser(VerifyUserDto input){
         Optional<User> optionalUser = userRepository.findByEmail(input.getEmail());

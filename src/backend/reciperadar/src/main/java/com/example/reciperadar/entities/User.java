@@ -49,8 +49,7 @@ public class User implements UserDetails {
     private Integer age;
     private String profileImageUrl;
     private Boolean publicProfile;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Recipe> recipes;
+
 
 
 
@@ -117,4 +116,5 @@ public class User implements UserDetails {
                 '}';
     }
 }
+
 

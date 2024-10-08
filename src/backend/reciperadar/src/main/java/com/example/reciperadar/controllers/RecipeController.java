@@ -11,7 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,31 +24,35 @@ import java.util.Map;
 
 public class RecipeController {
     private final RecipeService recipeService;
-    private final UserService userService;
 
     @Autowired
-    public RecipeController(RecipeService recipeService, UserService userService) {
+    public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
-        this.userService = userService;
     }
 
+
     @PostMapping("/create")
-    public ResponseEntity<?> createRecipe(@RequestBody RecipeDto recipe) {
-        // Save the recipe directly since username is included in the request body
-        Recipe savedRecipe = recipeService.createRecipe(recipe);
+    public ResponseEntity<?> createRecipe(
+            @RequestParam("username") String username,
+            @RequestParam("title") String title,
+            @RequestParam("serves") Integer serves,
+            @RequestParam("ingredients") String ingredients,
+            @RequestParam("instructions") String instructions,
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+        byte[] imageBytes = image != null ? image.getBytes() : null;
+        RecipeDto recipeDto = new RecipeDto(username, imageBytes, title, serves, ingredients, instructions);
+        Recipe savedRecipe = recipeService.createRecipe(recipeDto);
         return ResponseEntity.ok(savedRecipe);
     }
 
-
-
-
-    /*@GetMapping("/user/{username}")
-    public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username) {
-        Long userId = userService.getUserIdByUsername(username); // Convert username to userId
-        return ResponseEntity.ok(recipeService.allRecipesByUserId(userId));
+    @GetMapping("/{username}")
+    public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username){
+        List<Recipe> recipes = recipeService.getRecipesByUsername(username);
+        return ResponseEntity.ok(recipes);
     }
 
-    @GetMapping("/{recipeId}/user/{username}")
+
+    /*@GetMapping("/{recipeId}/user/{username}")
     public ResponseEntity<Recipe> getRecipeByIdAndUsername(
             @PathVariable Long recipeId,
             @PathVariable String username) {

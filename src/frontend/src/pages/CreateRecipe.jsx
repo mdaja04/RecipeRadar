@@ -10,7 +10,9 @@ const CreateRecipe = () => {
     const [recipeIngredients, setRecipeIngredients] = useState("");
     const [recipeServes, setRecipeServes] = useState(0);
     const [recipeInstructions, setRecipeInstructions] = useState("");
-    const [currentUsername, setCurrentUsername] = useState(""); // Store the username if needed
+    const [currentUsername, setCurrentUsername] = useState("");
+    const [recipeImage, setRecipeImage] = useState(null);
+
 
 
     useEffect(() => {
@@ -45,35 +47,34 @@ const CreateRecipe = () => {
     const handleRecipeUpload = async (e) => {
         e.preventDefault();
 
-        // Ensure user ID is available before creating the recipe
         if (!currentUsername) {
             alert("User not found. Please try again.");
             return;
         }
+        //FormData is necessary to include images, plain JSON doesn't suffice
+        const formData = new FormData();
+        formData.append("username", currentUsername);
+        formData.append("title", recipeTitle);
+        formData.append("serves", recipeServes);
+        formData.append("ingredients", recipeIngredients);
+        formData.append("instructions", recipeInstructions);
 
-        // Construct the recipe object with user ID details
-        const recipeData = {
-            username: currentUsername,
-            title: recipeTitle,
-            serves: recipeServes,
-            ingredients: recipeIngredients,
-            instructions: recipeInstructions,
-        };
+        if (recipeImage) {
+            formData.append("image", recipeImage);
+        }
 
         try {
-            // Make the request to the backend to create the recipe
             const response = await fetch("http://localhost:8080/recipes/create", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`  // Include the JWT in the Authorization header
                 },
-                body: JSON.stringify(recipeData),
+                body: formData,
             });
 
             if (response.ok) {
                 alert('Recipe created successfully!');
-                navigate('/recipes');  // Redirect to the recipes page after successful creation
+                navigate('/my-recipes');
             } else {
                 alert('Failed to create the recipe.');
             }
@@ -86,6 +87,7 @@ const CreateRecipe = () => {
     const handleImageChange = (event) => {
         const file = event.target.files[0];
         if (file) {
+            setRecipeImage(file);
             const reader = new FileReader();
             reader.onloadend = () => {
                 setImagePreview(reader.result);

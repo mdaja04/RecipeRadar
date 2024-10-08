@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import ProtectedRoute from "./components/PrivateRoutes";
 import PageNotFound from "./pages/PageNotFound";
 import CreateRecipe from "./pages/CreateRecipe";
+import MyRecipes from "./pages/MyRecipes";
 
 const App = () => {
     return (
@@ -20,6 +21,7 @@ const App = () => {
                 <Route path="/create-recipe" element={<ProtectedRoute><CreateRecipe/></ProtectedRoute>}/>
                 <Route path="/verify" element={<Verify/>} />
                 <Route path="*" element={<PageNotFound/>} />
+                <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
             </Routes>
         </Router>
     );

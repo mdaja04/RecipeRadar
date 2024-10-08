@@ -28,6 +28,8 @@ public class Recipe {
 
     private String username;  // Store the creator's username
 
+    private byte[] image;
+
 
 
     private String title;
@@ -40,8 +42,9 @@ public class Recipe {
     @Column(columnDefinition = "TEXT")
     private String instructions;
 
-    public Recipe(String username, String title, Integer serves, String ingredients, String instructions) {
+    public Recipe(String username, byte[] image, String title, Integer serves, String ingredients, String instructions) {
         this.username = username;
+        this.image = image;
         this.title = title;
         this.serves = serves;
         this.ingredients = ingredients;

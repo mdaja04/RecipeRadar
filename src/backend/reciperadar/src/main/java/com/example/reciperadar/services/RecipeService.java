@@ -25,12 +25,16 @@ public class RecipeService {
     }*/
 
     public Recipe createRecipe(RecipeDto recipe) {
-        Recipe recipe1 = new Recipe(recipe.getUsername(),recipe.getTitle(), recipe.getServes(),recipe.getIngredients(),recipe.getInstructions());
+        Recipe recipe1 = new Recipe(recipe.getUsername(), recipe.getImage(), recipe.getTitle(), recipe.getServes(),recipe.getIngredients(),recipe.getInstructions());
         return recipeRepository.save(recipe1);
     }
 
     public List<Recipe> getAllRecipes() {
         return recipeRepository.findAll();
+    }
+
+    public List<Recipe> getRecipesByUsername(String username) {
+        return recipeRepository.findByUsername(username);
     }
 
     /*public Recipe getRecipeByIdAndUserId(Long recipeId, Long userId) {

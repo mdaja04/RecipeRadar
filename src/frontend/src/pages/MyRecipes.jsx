@@ -76,12 +76,11 @@ const MyRecipes = () => {
                         <img src={`data:image/jpeg;base64,${recipe.image}`} alt={recipe.title}
                              className="recipe-image"/>
                         <div className="recipe-info">
-                            <h2>{recipe.title}</h2>
-                            <p>Serves: {recipe.serves}</p>
-                            <p>Ingredients: {recipe.ingredients}</p>
-                            <p>Instructions: {recipe.instructions}</p>
-                        </div>
+                        <div className="title-text">{recipe.title}</div>
+                        <div className="serves-text">Serves: {recipe.serves}</div>
                     </div>
+                    </div>
+
                 ))}
             </div>
         </div>

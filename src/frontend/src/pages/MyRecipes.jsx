@@ -7,38 +7,8 @@ const MyRecipes = () => {
     const [recipes, setRecipes] = useState([]);
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
+    const [recipeId, setRecipeId] = useState(0);
 
-    useEffect(() => {
-        const fetchUsername = async () => {
-            try {
-                const response = await fetch("http://localhost:8080/users/me", {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem("token")}`,  // Include the JWT token in Authorization header
-                    },
-                });
-
-                if (response.ok) {
-                    const userData = await response.json();
-                    setUsername(userData.username); // Set the username if needed
-                } else {
-                    console.error("Failed to fetch username. Status:", response.status);
-                    if (response.status === 401) {
-                        alert("User is not authenticated. Redirecting to login.");
-                        navigate("/signin");
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching username:", error);
-            }
-        };
-
-
-
-
-        fetchUsername();
-    }, [navigate]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -56,6 +26,7 @@ const MyRecipes = () => {
                 });
                 const recipesData = await recipesResponse.json();
                 setRecipes(recipesData);
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -63,16 +34,18 @@ const MyRecipes = () => {
         fetchData();
     }, [navigate]);
 
-    function openRecipe() {
-        console.log("Hi");
+    function openRecipe(recipe) {
+        const recipeId = recipe.id;
+        navigate(`/recipe/${recipeId}`, { state: { recipe } });
     }
+
 
     return (
         <div className="page-container">
             <Header/>
             <div className="recipes-grid">
                 {recipes.toReversed().map(recipe => (
-                    <div key={recipe.id} className="recipe-card" onClick={openRecipe}>
+                    <div key={recipe.id} className="recipe-card" onClick={() => openRecipe(recipe)}>
                         <img src={`data:image/jpeg;base64,${recipe.image}`} alt={recipe.title}
                              className="recipe-image"/>
                         <div className="recipe-info">

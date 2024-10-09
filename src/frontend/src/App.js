@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/PrivateRoutes";
 import PageNotFound from "./pages/PageNotFound";
 import CreateRecipe from "./pages/CreateRecipe";
 import MyRecipes from "./pages/MyRecipes";
+import RecipeCardPage from "./pages/RecipeCardPage";
+import FavouritesPage from "./pages/FavouritesPage";
 
 const App = () => {
     return (
@@ -22,6 +24,9 @@ const App = () => {
                 <Route path="/verify" element={<Verify/>} />
                 <Route path="*" element={<PageNotFound/>} />
                 <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
+                <Route path="/recipe/*" element={<ProtectedRoute><RecipeCardPage/></ProtectedRoute>}/>
+                <Route path="/favourites" element={<ProtectedRoute><FavouritesPage/></ProtectedRoute>}/>
+
             </Routes>
         </Router>
     );

@@ -17,6 +17,10 @@ function MoreOptions() {
         navigate('/signin');
     };
 
+    const openFavourites = () => {
+        navigate('/favourites')
+    }
+
 
 
     return (
@@ -27,7 +31,7 @@ function MoreOptions() {
             {isOpen && (
                 <div className="dropdown-menu">
                     <ul>
-                        <li><button>Favourites</button></li>
+                        <li><button onClick={openFavourites}>Favourites</button></li>
                         <li><button>Shopping List</button></li>
                         <li><button onClick={logOut}>Logout</button></li>
                     </ul>

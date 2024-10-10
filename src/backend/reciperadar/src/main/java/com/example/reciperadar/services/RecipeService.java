@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RecipeService {
@@ -37,13 +38,10 @@ public class RecipeService {
         return recipeRepository.findByUsername(username);
     }
 
-    /*public Recipe getRecipeByIdAndUserId(Long recipeId, Long userId) {
-        return recipeRepository.findByIdAndUserId(recipeId, userId)
-                .orElseThrow(() -> new RuntimeException("Recipe not found or not accessible by this user."));
-    }*/
 
-    public Recipe getByUsernameAndRecipeId(String username, Long recipeId){
-        return recipeRepository.findByUsernameAndId(username, recipeId);
+
+    public Optional<Recipe> getByRecipeId(Long recipeId){
+        return recipeRepository.findById(recipeId);
     }
 
 

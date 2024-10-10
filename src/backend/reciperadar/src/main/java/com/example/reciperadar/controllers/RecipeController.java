@@ -2,21 +2,15 @@ package com.example.reciperadar.controllers;
 
 import com.example.reciperadar.dto.RecipeDto;
 import com.example.reciperadar.entities.Recipe;
-import com.example.reciperadar.entities.User;
 import com.example.reciperadar.services.RecipeService;
-import com.example.reciperadar.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/recipes")
@@ -52,11 +46,10 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/{username}/{recipeId}")
-    public ResponseEntity<Recipe> getRecipeByUsernameAndRecipeId(
-            @PathVariable Long recipeId,
-            @PathVariable String username) {
-        Recipe recipe = recipeService.getByUsernameAndRecipeId(username, recipeId);
+    @GetMapping("/{recipeId}")
+    public ResponseEntity<Optional<Recipe>> getRecipeByRecipeId(
+            @PathVariable Long recipeId) {
+        Optional<Recipe> recipe = recipeService.getByRecipeId(recipeId);
         return ResponseEntity.ok(recipe);
 
     }

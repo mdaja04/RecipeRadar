@@ -52,12 +52,13 @@ public class RecipeController {
     }
 
 
-    /*@GetMapping("/{recipeId}/user/{username}")
-    public ResponseEntity<Recipe> getRecipeByIdAndUsername(
+    @GetMapping("/{username}/{recipeId}")
+    public ResponseEntity<Recipe> getRecipeByUsernameAndRecipeId(
             @PathVariable Long recipeId,
             @PathVariable String username) {
-        Long userId = userService.getUserIdByUsername(username);
-        return ResponseEntity.ok(recipeService.getRecipeByIdAndUserId(recipeId, userId));
-    }*/
+        Recipe recipe = recipeService.getByUsernameAndRecipeId(username, recipeId);
+        return ResponseEntity.ok(recipe);
+
+    }
 
 }

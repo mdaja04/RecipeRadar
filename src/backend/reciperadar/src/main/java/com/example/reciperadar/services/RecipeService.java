@@ -42,5 +42,9 @@ public class RecipeService {
                 .orElseThrow(() -> new RuntimeException("Recipe not found or not accessible by this user."));
     }*/
 
+    public Recipe getByUsernameAndRecipeId(String username, Long recipeId){
+        return recipeRepository.findByUsernameAndId(username, recipeId);
+    }
+
 
 }

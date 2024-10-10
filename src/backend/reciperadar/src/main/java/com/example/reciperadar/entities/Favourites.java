@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -26,14 +27,15 @@ public class Favourites {
     private String username;
 
     @ElementCollection
-    private List<Long> favouriteRecipeIds;
+    private List<Long> favouriteRecipeIds = new ArrayList<>();
 
-    public Favourites(String username, List<Long> favouriteRecipeIds) {
+    public Favourites(String username) {
         this.username = username;
-        this.favouriteRecipeIds = favouriteRecipeIds;
+        this.favouriteRecipeIds = new ArrayList<>();  // Initialize the list
     }
 
     public Favourites() {
 
     }
+
 }

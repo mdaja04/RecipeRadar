@@ -1,13 +1,12 @@
 package com.example.reciperadar.controllers;
 
+import com.example.reciperadar.entities.Favourites;
 import com.example.reciperadar.entities.Recipe;
 import com.example.reciperadar.services.FavouritesService;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,10 +20,16 @@ public class FavouritesController {
         this.favouritesService = favouritesService;
     }
 
-    @GetMapping("my-favourites")
-    public ResponseEntity<List<Recipe>> getFavouriteRecipes(String username){
-        List<Recipe> recipes = favouritesService.getFavouriteRecipes(username);
-        return ResponseEntity.ok(recipes);
+    @PostMapping("/add")
+    public ResponseEntity<?> addFavourite(@RequestParam String username, @RequestParam Long recipeId){
+        Favourites updatedFavourites = favouritesService.addFavouriteRecipeId(username, recipeId);
+        return ResponseEntity.ok(updatedFavourites);
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<List<Long>> getFavourites(@PathVariable String username){
+        List<Long> favouriteRecipeIds = favouritesService.getFavouriteRecipeIds(username);
+        return ResponseEntity.ok(favouriteRecipeIds);
     }
 
 }

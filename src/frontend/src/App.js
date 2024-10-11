@@ -10,7 +10,7 @@ import PageNotFound from "./pages/PageNotFound";
 import CreateRecipe from "./pages/CreateRecipe";
 import MyRecipes from "./pages/MyRecipes";
 import RecipeCardPage from "./pages/RecipeCardPage";
-import FavouritesPage from "./pages/FavouritesPage";
+import Favourites from "./pages/Favourites";
 
 const App = () => {
     return (
@@ -25,7 +25,7 @@ const App = () => {
                 <Route path="*" element={<PageNotFound/>} />
                 <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
                 <Route path="/recipe/*" element={<ProtectedRoute><RecipeCardPage/></ProtectedRoute>}/>
-                <Route path="/favourites" element={<ProtectedRoute><FavouritesPage/></ProtectedRoute>}/>
+                <Route path="/favourites" element={<ProtectedRoute><Favourites/></ProtectedRoute>}/>
 
             </Routes>
         </Router>

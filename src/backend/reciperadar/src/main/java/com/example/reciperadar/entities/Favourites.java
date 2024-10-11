@@ -27,7 +27,9 @@ public class Favourites {
     private String username;
 
     @ElementCollection
+    @CollectionTable(name = "favourite_recipes", joinColumns = @JoinColumn(name = "favourite_id"))
     private List<Long> favouriteRecipeIds = new ArrayList<>();
+
 
     public Favourites(String username) {
         this.username = username;

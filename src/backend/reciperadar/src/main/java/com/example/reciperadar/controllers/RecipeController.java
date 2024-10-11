@@ -46,12 +46,18 @@ public class RecipeController {
     }
 
 
-    @GetMapping("/{recipeId}")
+    @GetMapping("/id/{recipeId}")
     public ResponseEntity<Optional<Recipe>> getRecipeByRecipeId(
             @PathVariable Long recipeId) {
         Optional<Recipe> recipe = recipeService.getByRecipeId(recipeId);
         return ResponseEntity.ok(recipe);
 
+    }
+
+    @PostMapping("/favourites")
+    public ResponseEntity<List<Recipe>> getFavouriteRecipes(@RequestBody List<Long> recipeIds) {
+        List<Recipe> recipes = recipeService.getByRecipeIds(recipeIds);
+        return ResponseEntity.ok(recipes);
     }
 
 }

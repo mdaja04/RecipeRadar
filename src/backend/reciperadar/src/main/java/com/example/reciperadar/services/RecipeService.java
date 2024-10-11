@@ -19,11 +19,6 @@ public class RecipeService {
         this.recipeRepository = recipeRepository;
     }
 
-    /*public List<Recipe> allRecipesByUserId(Long userId){
-        List<Recipe> recipes = new ArrayList<>();
-        recipeRepository.findRecipesByUserId(userId);
-        return recipes;
-    }*/
 
     public Recipe createRecipe(RecipeDto recipe) {
         Recipe recipe1 = new Recipe(recipe.getUsername(), recipe.getImage(), recipe.getTitle(), recipe.getServes(),recipe.getIngredients(),recipe.getInstructions());
@@ -45,4 +40,7 @@ public class RecipeService {
     }
 
 
+    public List<Recipe> getByRecipeIds(List<Long> recipeIds) {
+        return recipeRepository.findAllByIdIn(recipeIds);
+    }
 }

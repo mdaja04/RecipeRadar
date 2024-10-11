@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './RecipeCardPage.css';
 import Header from "../components/Header";
@@ -6,7 +6,29 @@ import FavouriteButton from "../components/FavouriteButton";
 
 const RecipeCardPage = () => {
     const { state } = useLocation();
-    const { recipe } = state || {}; // retrieve email and password from state
+    const { recipe} = state || {};
+    const [username, setUsername] = useState("");
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const usernameResponse = await fetch("http://localhost:8080/users/me", {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+                });
+                //if (!usernameResponse.ok) return navigate("/signin");
+
+                const userData = await usernameResponse.json();
+                setUsername(userData.username);
+
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        };
+        fetchData();
+    }, [navigate]);
 
 
     return (
@@ -18,7 +40,7 @@ const RecipeCardPage = () => {
                 </div>
                 <div className="recipe-details-container">
                     <div className="recipe-details-header">
-                        <FavouriteButton/>
+                        <FavouriteButton recipeId = {recipe.id} username = {username}/>
                     </div>
                     <h1>{recipe.title}</h1>
                     <h2>Serves: {recipe.serves}</h2>

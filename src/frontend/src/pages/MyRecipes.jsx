@@ -16,7 +16,7 @@ const MyRecipes = () => {
                 const usernameResponse = await fetch("http://localhost:8080/users/me", {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
-                if (!usernameResponse.ok) return navigate("/signin");
+                //if (!usernameResponse.ok) return navigate("/signin");
 
                 const userData = await usernameResponse.json();
                 setUsername(userData.username);
@@ -36,7 +36,7 @@ const MyRecipes = () => {
 
     function openRecipe(recipe) {
         const recipeId = recipe.id;
-        navigate(`/recipe/${recipeId}`, { state: { recipe } });
+        navigate(`/recipe/${recipeId}`, { state: { recipe} });
     }
 
 

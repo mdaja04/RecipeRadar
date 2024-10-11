@@ -1,5 +1,6 @@
 package com.example.reciperadar.controllers;
 
+import com.example.reciperadar.dto.AddFavouriteDto;
 import com.example.reciperadar.entities.Favourites;
 import com.example.reciperadar.entities.Recipe;
 import com.example.reciperadar.services.FavouritesService;
@@ -21,8 +22,8 @@ public class FavouritesController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addFavourite(@RequestParam String username, @RequestParam Long recipeId){
-        Favourites updatedFavourites = favouritesService.addFavouriteRecipeId(username, recipeId);
+    public ResponseEntity<?> addFavourite(@RequestBody AddFavouriteDto data){
+        Favourites updatedFavourites = favouritesService.addFavouriteRecipeId(data.getUsername(), data.getRecipeId());
         return ResponseEntity.ok(updatedFavourites);
     }
 

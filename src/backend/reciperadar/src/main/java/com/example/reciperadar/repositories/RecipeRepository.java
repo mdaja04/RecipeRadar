@@ -26,7 +26,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
     @Query("SELECT r FROM Recipe r ORDER BY RANDOM()")
     Page<Recipe> findRandomRecipes(Pageable pageable);
 
-
+    List<Recipe> findByTitleContainingIgnoreCase(String title);
 
 }
 

@@ -49,4 +49,8 @@ public class RecipeService {
         return recipeRepository.findRandomRecipes(PageRequest.of(0, limit)).getContent();
     }
 
+    public List<Recipe> searchRecipes(String searchQuery){
+        return recipeRepository.findByTitleContainingIgnoreCase(searchQuery);
+    }
+
 }

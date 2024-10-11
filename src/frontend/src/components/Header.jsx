@@ -5,14 +5,15 @@ import SearchBar from "./SearchBar.jsx";
 import UserProfile from "./UserProfile";
 import MoreOptions from "./MoreOptions.jsx";
 import './Header.css'
-const Header = () => {
+const Header = ({onSearch}) => {
+
     return (
         <div className="header-container">
-            <HomeButton></HomeButton>
-            <CreateRecipeButton></CreateRecipeButton>
-            <SearchBar></SearchBar>
-            <UserProfile></UserProfile>
-            <MoreOptions></MoreOptions>
+            <HomeButton />
+            <CreateRecipeButton />
+            <SearchBar onSearch={onSearch} />
+            <UserProfile />
+            <MoreOptions />
         </div>
     );
 };

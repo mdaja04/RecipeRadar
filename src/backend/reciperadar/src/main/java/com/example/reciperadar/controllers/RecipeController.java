@@ -45,6 +45,12 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<Recipe>> searchRecipes(@RequestParam String searchQuery){
+        List<Recipe> recipes = recipeService.searchRecipes(searchQuery);
+        return ResponseEntity.ok(recipes);
+    }
+
 
     @GetMapping("/id/{recipeId}")
     public ResponseEntity<Optional<Recipe>> getRecipeByRecipeId(

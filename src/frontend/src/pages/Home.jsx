@@ -1,10 +1,26 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../components/Header'
 import {useNavigate} from "react-router-dom";
-
+import './Home.css'
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchRandomRecipes();
+    }, []);
+
+    const search = async (query) => {
+        try {
+            const response = await fetch(`http://localhost:8080/recipes/search?searchQuery=${query}`, {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
+            });
+            const data = await response.json();
+            setRecipes(data);
+        } catch (error) {
+            console.error("Error searching recipes:", error);
+        }
+    };
 
     const fetchRandomRecipes = async () => {
         try {
@@ -29,7 +45,7 @@ const Home = () => {
 
     return (
         <div className="page-container">
-            <Header />
+            <Header onSearch={search} />
             <div className="recipes-grid">
                 {recipes.length === 0 ? (
                     <p>Loading recipes...</p>

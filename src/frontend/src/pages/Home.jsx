@@ -12,8 +12,12 @@ const Home = () => {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
             });
             const newRecipes = await response.json();
-            setRecipes([...recipes, ...newRecipes]);
-        } catch (error) {
+            const uniqueNewRecipes = newRecipes.filter(
+                (newRecipe) => !recipes.some((existingRecipe) => existingRecipe.id === newRecipe.id)
+            );
+
+
+            setRecipes([...recipes, ...uniqueNewRecipes]);        } catch (error) {
             console.error("Error fetching random recipes:", error);
         }
     };

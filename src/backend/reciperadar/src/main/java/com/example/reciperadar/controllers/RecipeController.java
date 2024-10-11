@@ -60,4 +60,11 @@ public class RecipeController {
         return ResponseEntity.ok(recipes);
     }
 
+    @GetMapping("/random")
+    public ResponseEntity<List<Recipe>> getRandomRecipes(@RequestParam Integer limit){
+        List<Recipe> recipes = recipeService.getRandomRecipes(limit);
+        return ResponseEntity.ok(recipes);
+    }
+
+
 }

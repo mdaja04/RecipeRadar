@@ -4,6 +4,7 @@ import com.example.reciperadar.dto.RecipeDto;
 import com.example.reciperadar.entities.Recipe;
 import com.example.reciperadar.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,4 +44,9 @@ public class RecipeService {
     public List<Recipe> getByRecipeIds(List<Long> recipeIds) {
         return recipeRepository.findAllByIdIn(recipeIds);
     }
+
+    public List<Recipe> getRandomRecipes(int limit) {
+        return recipeRepository.findRandomRecipes(PageRequest.of(0, limit)).getContent();
+    }
+
 }

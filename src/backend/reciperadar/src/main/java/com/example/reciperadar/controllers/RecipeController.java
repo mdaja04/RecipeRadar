@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,6 +39,22 @@ public class RecipeController {
         Recipe savedRecipe = recipeService.createRecipe(recipeDto);
         return ResponseEntity.ok(savedRecipe);
     }
+
+    /*@PutMapping("/update")
+    public ResponseEntity<?> updateRecipe(
+            @RequestParam("username") String username,
+            @RequestParam("title") String title,
+            @RequestParam("serves") Integer serves,
+            @RequestParam("ingredients") String ingredients,
+            @RequestParam("instructions") String instructions,
+            @RequestParam(value = "image", required = false) MultipartFile image) throws IOException {
+        byte[] imageBytes = image != null ? image.getBytes() : null;
+        RecipeDto recipeDto = new RecipeDto(username, imageBytes, title, serves, ingredients, instructions);
+        Recipe savedRecipe = recipeService.createRecipe(recipeDto);
+        return ResponseEntity.ok(savedRecipe);
+    }*/
+
+
 
     @GetMapping("/{username}")
     public ResponseEntity<List<Recipe>> getRecipesByUsername(@PathVariable String username){
@@ -70,6 +87,12 @@ public class RecipeController {
     public ResponseEntity<List<Recipe>> getRandomRecipes(@RequestParam Integer limit){
         List<Recipe> recipes = recipeService.getRandomRecipes(limit);
         return ResponseEntity.ok(recipes);
+    }
+
+    @DeleteMapping("/delete/{recipeId}")
+    public ResponseEntity<?> deleteRecipe(@PathVariable Long recipeId) {
+        recipeService.deleteRecipe(recipeId);
+        return ResponseEntity.ok("Recipe deleted successfully");
     }
 
 

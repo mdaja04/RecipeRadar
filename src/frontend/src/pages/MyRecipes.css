@@ -39,6 +39,11 @@
     filter: brightness(0.97);
 }
 
+.recipe-card:hover
+#edit-button{
+    display: flex;
+}
+
 .recipe-image {
     position: relative;
     display: flex;
@@ -81,4 +86,26 @@
 
 }
 
+
+#edit-button {
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
+    background-color: #fcba03;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+
+#edit-button:hover {
+    background-color: #f2a800;
+}
 

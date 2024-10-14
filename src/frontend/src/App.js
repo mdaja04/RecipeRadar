@@ -12,6 +12,7 @@ import MyRecipes from "./pages/MyRecipes";
 import RecipeCardPage from "./pages/RecipeCardPage";
 import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings"
+import EditRecipe from "./pages/EditRecipe";
 
 const App = () => {
     return (
@@ -25,6 +26,7 @@ const App = () => {
                 <Route path="/verify" element={<Verify/>} />
                 <Route path="*" element={<PageNotFound/>} />
                 <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
+                <Route path="/recipe/edit/*" element={<ProtectedRoute><EditRecipe/></ProtectedRoute>}/>
 
                 <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
                 <Route path="/recipe/*" element={<ProtectedRoute><RecipeCardPage/></ProtectedRoute>}/>

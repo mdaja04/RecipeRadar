@@ -2,6 +2,7 @@ package com.example.reciperadar.services;
 
 import com.example.reciperadar.dto.RecipeDto;
 import com.example.reciperadar.entities.Recipe;
+import com.example.reciperadar.entities.User;
 import com.example.reciperadar.repositories.RecipeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -52,5 +53,11 @@ public class RecipeService {
     public List<Recipe> searchRecipes(String searchQuery){
         return recipeRepository.findByTitleContainingIgnoreCase(searchQuery);
     }
+
+    public void deleteRecipe(Long recipeId) {
+        Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(()->new IllegalStateException("Recipe not found"));
+        recipeRepository.delete(recipe);
+    }
+
 
 }

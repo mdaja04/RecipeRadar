@@ -1,0 +1,17 @@
+@import './CreateRecipe.css';
+
+
+
+
+#delete-button {
+    background-color: #d11a2a;
+    margin-left: 20px;
+}
+
+#delete-button:hover{
+    transition: background-color 1s;
+    background-color: #a62626;
+}
+
+
+

@@ -26,7 +26,7 @@ const Settings = () => {
 
                 if (response.ok) {
                     const userData = await response.json();
-                    setCurrentUsername(userData.username); // Set the username if needed
+                    setCurrentUsername(userData.username);
                 } else {
                     console.error("Failed to fetch username. Status:", response.status);
                     if (response.status === 401) {
@@ -98,6 +98,42 @@ const Settings = () => {
         }
     };
 
+    const deleteAccount = async () => {
+        const confirmed = window.confirm("Are you sure you want to delete your account? This action is irreversible.");
+        if (confirmed){
+            try{
+                const response = await fetch(`http://localhost:8080/users/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: currentUsername }),
+
+                })
+                if (response.ok){
+                    alert("Account Deleted Successfully!");
+                    localStorage.clear();
+                    navigate("/signup");
+                }
+                else{
+                    alert("failed to delete account!")
+                }
+
+
+            }
+            catch (error) {
+                console.error("Error deleting user:", error);
+                alert("An error occurred while deleting user.");
+
+            }
+        }
+
+
+
+
+    }
+
     return (
         <div className="page-container">
             <Header/>
@@ -123,35 +159,45 @@ const Settings = () => {
                 </div>
 
                 <div className="recipe-details-container">
-                    <h2>Change Profile Details</h2>
-                    <form>
-                        <div className="form-group">
-                            <label htmlFor="name">Change Name</label>
-                            <input type="text" name="surname" placeholder="Enter name here"
-                                   onChange={(e) => setName(e.target.value)}/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="surname">Change Surname</label>
-                            <input type="text" name="surname" placeholder="Enter surname here"
-                                   onChange={(e) => setSurname(e.target.value)}/>
-                        </div>
-                        <div className="form-group">
-                            <label>Set Account Privacy</label>
-                            <div className="privacy-toggle">
-                                <label className="switch">
-                                    <input
-                                        type="checkbox"
-                                        checked={isPrivate}
-                                        onChange={() => setIsPrivate(!isPrivate)}
-                                    />
-                                    <span className="slider"></span>
-                                </label>
-                                <label>{isPrivate ? "Private" : "Public"}</label>
+                    <div className="recipe-details-container-inner-upper">
+                        <h2>Change Profile Details</h2>
+                        <form>
+                            <div className="form-group">
+                                <label htmlFor="name">Change Name</label>
+                                <input type="text" name="surname" placeholder="Enter name here"
+                                       onChange={(e) => setName(e.target.value)}/>
                             </div>
-                        </div>
-                    </form>
-                    <button type="submit" className="submit-button" onClick={handleSaveSettings}>Save Changes
-                    </button>
+                            <div className="form-group">
+                                <label htmlFor="surname">Change Surname</label>
+                                <input type="text" name="surname" placeholder="Enter surname here"
+                                       onChange={(e) => setSurname(e.target.value)}/>
+                            </div>
+                            <div className="form-group">
+                                <label>Set Account Privacy</label>
+                                <div className="privacy-toggle">
+                                    <label className="switch">
+                                        <input
+                                            type="checkbox"
+                                            checked={isPrivate}
+                                            onChange={() => setIsPrivate(!isPrivate)}
+                                        />
+                                        <span className="slider"></span>
+                                    </label>
+                                    <label>{isPrivate ? "Private" : "Public"}</label>
+                                </div>
+                            </div>
+                        </form>
+                        <button type="submit" className="submit-button" onClick={handleSaveSettings}>Save Changes
+                        </button>
+
+                    </div>
+                    <div className="delete-button-container">
+                        <button type="submit" className="submit-button" id="delete-button"
+                                onClick={deleteAccount}>Delete Account
+                        </button>
+                    </div>
+
+
                 </div>
             </div>
         </div>

@@ -14,3 +14,26 @@
 }
 
 
+.delete-button-container{
+    height: 20%;
+    width: 100%;
+    align-items: center;
+    justify-content: left;
+    display: flex;
+}
+
+#delete-button {
+    background-color: #d11a2a;
+}
+
+#delete-button:hover{
+    transition: background-color 1s;
+    background-color: #a62626;
+}
+
+
+.recipe-details-container-inner-upper{
+    height: 80%;
+    width: 100%;
+}
+

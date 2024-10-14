@@ -82,6 +82,13 @@ public class UserController {
         return ResponseEntity.ok("User updated successfully");
     }
 
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestBody Map<String, String> requestBody) {
+        String username = requestBody.get("username");
+        userService.deleteUser(username);
+        return ResponseEntity.ok("User deleted successfully");
+    }
+
 
 
     /*@PostMapping
@@ -89,10 +96,7 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @DeleteMapping(path = "{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId){
-        userService.deleteUser(userId);
-    }
+
 
     */
 

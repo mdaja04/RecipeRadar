@@ -70,6 +70,7 @@ const Settings = () => {
 
             if (response.ok) {
                 alert("Profile updated successfully!");
+                navigate('/home');
             } else {
                 alert("Failed to update profile.");
             }

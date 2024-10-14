@@ -17,7 +17,6 @@ const RecipeCardPage = () => {
                 const usernameResponse = await fetch("http://localhost:8080/users/me", {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
-                //if (!usernameResponse.ok) return navigate("/signin");
 
                 const userData = await usernameResponse.json();
                 setUsername(userData.username);

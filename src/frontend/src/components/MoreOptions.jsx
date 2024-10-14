@@ -22,6 +22,9 @@ function MoreOptions() {
     }
 
 
+    function openMyRecipes() {
+        navigate('/my-recipes')
+    }
 
     return (
         <div className="dropdown-container">
@@ -31,6 +34,7 @@ function MoreOptions() {
             {isOpen && (
                 <div className="dropdown-menu">
                     <ul>
+                        <li><button onClick={openMyRecipes}>My Recipes</button></li>
                         <li><button onClick={openFavourites}>Favourites</button></li>
                         <li><button>Shopping List</button></li>
                         <li><button onClick={logOut}>Logout</button></li>

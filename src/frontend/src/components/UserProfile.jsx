@@ -6,7 +6,7 @@ const UserProfile = () => {
     const navigate = useNavigate()
 
     function openRecipesPage(){
-        navigate('/my-recipes');
+        navigate('/settings');
     }
 
 

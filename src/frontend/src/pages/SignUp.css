@@ -147,3 +147,15 @@
 .google-sign-in{
     color: #505050;
 }
+
+.sign-in-label {
+    color: #6c63ff;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.sign-in-label:hover {
+    text-decoration: underline;
+}

@@ -11,7 +11,7 @@ const Header = ({onSearch}) => {
         <div className="header-container">
             <HomeButton />
             <CreateRecipeButton />
-            <SearchBar onSearch={onSearch} />
+            <SearchBar onSearch={onSearch}/>
             <UserProfile />
             <MoreOptions />
         </div>

@@ -48,6 +48,9 @@ const SignIn = () => {
     };
 
 
+    function openSignupPage() {
+        navigate('/signup')
+    }
 
     return (
         <div className="page-container">
@@ -88,7 +91,7 @@ const SignIn = () => {
 
             </div>
             <p>Don't have an account?</p>
-            <label className="sign-up-label">Sign up here</label>
+            <label className="sign-up-label" onClick={openSignupPage}>Sign up here</label>
         </div>
 
     );

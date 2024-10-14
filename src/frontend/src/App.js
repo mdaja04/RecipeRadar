@@ -11,6 +11,7 @@ import CreateRecipe from "./pages/CreateRecipe";
 import MyRecipes from "./pages/MyRecipes";
 import RecipeCardPage from "./pages/RecipeCardPage";
 import Favourites from "./pages/Favourites";
+import Settings from "./pages/Settings"
 
 const App = () => {
     return (
@@ -23,6 +24,8 @@ const App = () => {
                 <Route path="/create-recipe" element={<ProtectedRoute><CreateRecipe/></ProtectedRoute>}/>
                 <Route path="/verify" element={<Verify/>} />
                 <Route path="*" element={<PageNotFound/>} />
+                <Route path="/settings" element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
+
                 <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
                 <Route path="/recipe/*" element={<ProtectedRoute><RecipeCardPage/></ProtectedRoute>}/>
                 <Route path="/favourites" element={<ProtectedRoute><Favourites/></ProtectedRoute>}/>

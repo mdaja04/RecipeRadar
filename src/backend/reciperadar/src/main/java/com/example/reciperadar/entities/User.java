@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -52,7 +53,7 @@ public class User implements UserDetails {
 
     @Transient
     private Integer age;
-    private String profileImageUrl;
+    private byte[] image;
     private Boolean publicProfile;
 
 
@@ -116,7 +117,7 @@ public class User implements UserDetails {
                 ", password='" + password + '\'' +
                 ", dob=" + dob +
                 ", age=" + age +
-                ", profileImageUrl='" + profileImageUrl + '\'' +
+                ", profileImageUrl='" + Arrays.toString(image) + '\'' +
                 ", publicProfile=" + publicProfile +
                 '}';
     }

@@ -23,6 +23,10 @@ const SignUp = () => {
         });
     };
 
+    function openSigninPage() {
+        navigate('/signin')
+    }
+
     return (
         <div className="page-container">
             <div className="outer-container">
@@ -61,6 +65,7 @@ const SignUp = () => {
                     />
                     <button className="continue-button" onClick={handleNext}>Continue</button>
                 </div>
+
                 <div className="or-container">
                     <span>Or continue with</span>
                     <Link to="/login">
@@ -71,6 +76,8 @@ const SignUp = () => {
                     </Link>
                 </div>
             </div>
+            <p>Already have an account?</p>
+            <label className="sign-in-label" onClick={openSigninPage}>Sign in here</label>
         </div>
     );
 };

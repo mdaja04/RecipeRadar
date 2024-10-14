@@ -12,7 +12,7 @@ function MoreOptions() {
     };
 
     const logOut = () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         alert("Logged out successfully");
         navigate('/signin');
     };

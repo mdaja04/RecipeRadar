@@ -48,6 +48,7 @@ const Settings = () => {
         formData.append("username", currentUsername);
         if (profilePicture) {
             formData.append("image", profilePicture);
+            localStorage.removeItem("token");
         }
         if (name !== ""){
             formData.append("name", name);

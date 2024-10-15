@@ -6,7 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 const EditRecipe = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { recipeId } = location.state || {}; // Retrieve the recipeId from the location state
+    const { recipeId } = location.state || {};
     const [imagePreview, setImagePreview] = useState(null);
     const [recipeTitle,setRecipeTitle] = useState("");
     const [recipeIngredients, setRecipeIngredients] = useState("");

@@ -38,5 +38,10 @@ public class FavouritesService {
     }
 
 
+    public Favourites deleteFavouriteRecipeId(String username, Long recipeId) {
+        Favourites favourites = favouritesRepository.findByUsername(username);
 
+        favourites.getFavouriteRecipeIds().remove(recipeId);
+        return favouritesRepository.save(favourites);
+    }
 }

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import Header from "../components/Header";
+import './Favourites.css';
 const Favourites = () => {
     const navigate = useNavigate();
     const [recipes, setRecipes] = useState([]);
@@ -64,17 +65,46 @@ const Favourites = () => {
         const recipeId = recipe.id;
         navigate(`/recipe/${recipeId}`, { state: { recipe } });
     }
+
+    const removeRecipe = async(recipe) => {
+        const confirmed = window.confirm("Remove this recipe from your favourites?");
+
+        if(confirmed){
+            try {
+                const response = await fetch(`http://localhost:8080/favourites/delete/${username}/${recipe.id}`, {
+                    method: "DELETE",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`,
+                    },
+                });
+                if (response.ok){
+                    alert("Recipe deleted successfully!")
+                }
+                else{
+                    alert("Failed to delete recipe!")
+                }
+            }catch{
+
+            }
+
+        }
+
+    }
+
     return (
         <div className="page-container">
             <Header/>
             <div className="recipes-grid">
                 {recipes.toReversed().map(recipe => (
-                    <div key={recipe.id} className="recipe-card" onClick={() => openRecipe(recipe)}>
+                    <div key={recipe.id} className="recipe-card">
                         <img src={`data:image/jpeg;base64,${recipe.image}`} alt={recipe.title}
-                             className="recipe-image"/>
+                             className="recipe-image" onClick={() => openRecipe(recipe)}/>
                         <div className="recipe-info">
                             <div className="title-text">{recipe.title}</div>
                             <div className="serves-text">Serves: {recipe.serves}</div>
+                            <button id="edit-button" onClick={() => removeRecipe(recipe)}><span
+                                className="material-symbols-outlined">delete</span></button>
                         </div>
                     </div>
 

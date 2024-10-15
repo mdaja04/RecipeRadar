@@ -33,4 +33,10 @@ public class FavouritesController {
         return ResponseEntity.ok(favouriteRecipeIds);
     }
 
+    @DeleteMapping("/delete/{username}/{recipeId}")
+    public ResponseEntity<?> deleteFavourite(@PathVariable String username, @PathVariable Long recipeId){
+        Favourites updatedFavourites = favouritesService.deleteFavouriteRecipeId(username, recipeId);
+        return ResponseEntity.ok(updatedFavourites);
+    }
+
 }

@@ -80,6 +80,7 @@ const Favourites = () => {
                 });
                 if (response.ok){
                     alert("Recipe deleted successfully!")
+                    navigate('/favourites');
                 }
                 else{
                     alert("Failed to delete recipe!")

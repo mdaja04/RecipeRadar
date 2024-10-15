@@ -23,6 +23,10 @@ public class FavouritesController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addFavourite(@RequestBody AddFavouriteDto data){
+        List<Long> favourites = favouritesService.getFavouriteRecipeIds(data.getUsername());
+        if (favourites.contains(data.getRecipeId())){
+            return ResponseEntity.ok("Recipe already in favourites");
+        }
         Favourites updatedFavourites = favouritesService.addFavouriteRecipeId(data.getUsername(), data.getRecipeId());
         return ResponseEntity.ok(updatedFavourites);
     }

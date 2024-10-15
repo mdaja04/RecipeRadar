@@ -1,14 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import Header from '../components/Header'
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import './Home.css'
 const Home = () => {
     const [recipes, setRecipes] = useState([]);
+    const location = useLocation();
     const navigate = useNavigate();
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get('search');
 
     useEffect(() => {
-        fetchRandomRecipes();
-    }, []);
+        if (query) {
+            search(query);
+        } else {
+            fetchRandomRecipes();
+        }
+    }, [query]);
 
     const search = async (query) => {
         try {

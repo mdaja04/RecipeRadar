@@ -1,10 +1,15 @@
-import React, {useState} from 'react';
-import './SearchBar.css'
-const SearchBar = ({ onSearch }) => {
+import { useNavigate } from 'react-router-dom';
+import {useState} from "react";
+import './SearchBar.css';
+
+const SearchBar = () => {
     const [searchQuery, setSearchQuery] = useState("");
+    const navigate = useNavigate();
 
     const handleSearch = () => {
-        onSearch(searchQuery);
+        if (searchQuery) {
+            navigate(`/home?search=${searchQuery}`);
+        }
     };
 
     return (
@@ -22,6 +27,5 @@ const SearchBar = ({ onSearch }) => {
         />
     );
 };
-
 
 export default SearchBar;

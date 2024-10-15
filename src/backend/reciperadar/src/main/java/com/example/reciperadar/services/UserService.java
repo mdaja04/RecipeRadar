@@ -51,4 +51,8 @@ public class UserService {
         User user = userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("User not found"));
         userRepository.delete(user);
     }
+
+    public User findUser(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("user not found"));
+    }
 }

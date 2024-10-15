@@ -3,32 +3,57 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import './RecipeCardPage.css';
 import Header from "../components/Header";
 import FavouriteButton from "../components/FavouriteButton";
+import UserProfile from "../components/UserProfile";
 
 const RecipeCardPage = () => {
     const { state } = useLocation();
     const { recipe} = state || {};
+    const [myUsername, setMyUsername] = useState("");
     const [username, setUsername] = useState("");
+
+    const[user, setUser] = useState(null);
     const navigate = useNavigate();
+    const[profileImage, setProfileImage] = useState();
+
 
 
     useEffect(() => {
+
+        const fetchRecipeUserData = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/users/${recipe.username}`, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
+                });
+                const userData = await response.json();
+                setUser(userData);
+                setUsername(userData.username);
+                setProfileImage(userData.image);
+
+            }catch{}
+
+
+        }
         const fetchData = async () => {
             try {
-                const usernameResponse = await fetch("http://localhost:8080/users/me", {
+                const usernameResponse = await fetch(`http://localhost:8080/users/me`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
 
                 const userData = await usernameResponse.json();
-                setUsername(userData.username);
-
+                setMyUsername(userData.username);
 
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
+        fetchRecipeUserData();
         fetchData();
     }, [navigate]);
 
+
+    function openRecipesPage() {
+        navigate(`/${username}`, {state: {user}});
+    }
 
     return (
         <div className="page-container">
@@ -39,7 +64,15 @@ const RecipeCardPage = () => {
                 </div>
                 <div className="recipe-details-container">
                     <div className="recipe-details-header">
-                        <FavouriteButton recipeId = {recipe.id} username = {username}/>
+                        <button className="user-profile-container" onClick={openRecipesPage}>
+                            {profileImage ? (
+                                <img className="profile-image" src={`data:image/jpeg;base64,${profileImage}`} alt="pfp"/>
+                            ) : (
+                                <div className="placeholder">Profile</div>
+                            )}
+
+                        </button>
+                        <FavouriteButton recipeId={recipe.id} username={myUsername}/>
                     </div>
                     <h1>{recipe.title}</h1>
                     <h2>Serves: {recipe.serves}</h2>

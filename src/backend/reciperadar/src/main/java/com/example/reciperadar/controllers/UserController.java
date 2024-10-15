@@ -41,14 +41,12 @@ public class UserController {
         return ResponseEntity.ok(currentUser);
     }
 
-    @GetMapping(value = "/username")
-    public String currentUserName(Principal principal) {
-        return principal.getName();
+    @GetMapping(value = "/{username}")
+    public ResponseEntity<User> findUser(@PathVariable String username) {
+        User user = userService.findUser(username);
+        return ResponseEntity.ok(user);
     }
-    @GetMapping(value = "/my-username")
-    public String currentUserName(Authentication authentication) {
-        return authentication.getName();
-    }
+
 
 
     @GetMapping("/")

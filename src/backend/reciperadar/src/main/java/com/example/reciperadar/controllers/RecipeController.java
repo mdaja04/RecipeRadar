@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/recipes")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://reciperadar-e0s5.onrender.com"}, allowCredentials = "true")
 
 public class RecipeController {
     private final RecipeService recipeService;

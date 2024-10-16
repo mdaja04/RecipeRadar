@@ -7,12 +7,24 @@ const CreateRecipe = () => {
     const navigate = useNavigate();
     const [imagePreview, setImagePreview] = useState(null);
     const [recipeTitle,setRecipeTitle] = useState("");
-    const [recipeIngredients, setRecipeIngredients] = useState("");
-    const [recipeServes, setRecipeServes] = useState(0);
+    const [ingredient, setIngredient] = useState("");
+    const [ingredientsList, setIngredientsList] = useState([]);
     const [recipeInstructions, setRecipeInstructions] = useState("");
     const [currentUsername, setCurrentUsername] = useState("");
     const [recipeImage, setRecipeImage] = useState(null);
+    const [recipeServes, setRecipeServes] = useState(0);
 
+
+    const addIngredient = () => {
+        if (ingredient.trim()) {
+            setIngredientsList([...ingredientsList, ingredient]);
+            setIngredient("");
+        }
+    };
+
+    const removeIngredient = (index) => {
+        setIngredientsList(ingredientsList.filter((_, i) => i !== index));
+    };
 
 
     useEffect(() => {
@@ -56,7 +68,7 @@ const CreateRecipe = () => {
         formData.append("username", currentUsername);
         formData.append("title", recipeTitle);
         formData.append("serves", recipeServes);
-        formData.append("ingredients", recipeIngredients);
+        formData.append("ingredients", JSON.stringify(ingredientsList));
         formData.append("instructions", recipeInstructions);
 
         if (recipeImage) {
@@ -124,21 +136,40 @@ const CreateRecipe = () => {
                     <form>
                         <div className="form-group">
                             <label htmlFor="title">Recipe Title</label>
-                            <input type="text" id="title" name="title" placeholder="Enter recipe title" onChange={(e) => setRecipeTitle(e.target.value)} required/>
+                            <input type="text" id="title" name="title" placeholder="Enter recipe title"
+                                   onChange={(e) => setRecipeTitle(e.target.value)} required/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="serves">Serves</label>
-                            <input type="number" name="serves" placeholder="Enter number of people recipe serves" onChange={(e) => setRecipeServes(e.target.value)} required/>
+                            <input type="number" name="serves" placeholder="Enter number of people recipe serves"
+                                   onChange={(e) => setRecipeServes(e.target.value)} required/>
                         </div>
                         <div className="form-group">
-                            <label htmlFor="ingredients">Ingredients</label>
-                            <textarea id="ingredients" name="ingredients" placeholder="Enter ingredients" onChange={(e) => setRecipeIngredients(e.target.value)} required/>
+                            <label>Add Ingredients</label>
+                            <input
+                                type="text"
+                                value={ingredient}
+                                onChange={(e) => setIngredient(e.target.value)}
+                                placeholder="Enter ingredient"
+                            />
+                            <button type="button" onClick={addIngredient}>Add Ingredient</button>
                         </div>
+                        <ul>
+                            {ingredientsList.map((item, index) => (
+                                <li key={index}>
+                                    {item}
+                                    <button type="button" onClick={() => removeIngredient(index)}>Remove</button>
+                                </li>
+                            ))}
+                        </ul>
+
                         <div className="form-group">
                             <label htmlFor="instructions">Instructions</label>
-                            <textarea id="instructions" name="instructions" placeholder="Enter instructions" onChange={(e) => setRecipeInstructions(e.target.value)} required/>
+                            <textarea id="instructions" name="instructions" placeholder="Enter instructions"
+                                      onChange={(e) => setRecipeInstructions(e.target.value)} required/>
                         </div>
-                        <button type="submit" className="submit-button" onClick={handleRecipeUpload}>Create Recipe</button>
+                        <button type="submit" className="submit-button" onClick={handleRecipeUpload}>Create Recipe
+                        </button>
                     </form>
                 </div>
 

@@ -1,7 +1,7 @@
 package com.example.reciperadar.entities;
-
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -10,16 +10,17 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-public class Favourites {
+@NoArgsConstructor
+public class ShoppingList {
     @Id
     @SequenceGenerator(
-            name = "favourites_sequence",
-            sequenceName = "favourites_sequence",
+            name = "shopping_list_sequence",
+            sequenceName = "shopping_list_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "favourites_sequence"
+            generator = "shopping_list_sequence"
     )
     private Long id;
 
@@ -27,17 +28,11 @@ public class Favourites {
     private String username;
 
     @ElementCollection
-    @CollectionTable(name = "favourite_recipes", joinColumns = @JoinColumn(name = "favourite_id"))
-    private List<Long> favouriteRecipeIds = new ArrayList<>();
+    private List<String> shoppingListItems = new ArrayList<>();
 
-
-    public Favourites(String username) {
+    public ShoppingList(String username) {
         this.username = username;
-        this.favouriteRecipeIds = new ArrayList<>();
-    }
-
-    public Favourites() {
-
+        this.shoppingListItems = new ArrayList<>();
     }
 
 }

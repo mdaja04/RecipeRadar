@@ -10,6 +10,7 @@ const RecipeCardPage = () => {
     const { recipe} = state || {};
     const [myUsername, setMyUsername] = useState("");
     const [username, setUsername] = useState("");
+    const ingredients = JSON.parse(recipe.ingredients);
 
     const[user, setUser] = useState(null);
     const navigate = useNavigate();
@@ -55,6 +56,10 @@ const RecipeCardPage = () => {
         navigate(`/${username}`, {state: {user}});
     }
 
+    function addToShoppingList() {
+        return undefined;
+    }
+
     return (
         <div className="page-container">
             <Header/>
@@ -66,7 +71,8 @@ const RecipeCardPage = () => {
                     <div className="recipe-details-header">
                         <button className="user-profile-container" onClick={openRecipesPage}>
                             {profileImage ? (
-                                <img className="profile-image" src={`data:image/jpeg;base64,${profileImage}`} alt="pfp"/>
+                                <img className="profile-image" src={`data:image/jpeg;base64,${profileImage}`}
+                                     alt="pfp"/>
                             ) : (
                                 <div className="placeholder">Profile</div>
                             )}
@@ -76,7 +82,13 @@ const RecipeCardPage = () => {
                     </div>
                     <h1>{recipe.title}</h1>
                     <h2>Serves: {recipe.serves}</h2>
-                    <p className="recipe-text">{recipe.ingredients}</p>
+                    <h3>Ingredients:</h3>
+                    <ul>
+                        {ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                        ))}
+                    </ul>
+                    <button className="submit-button" onClick={addToShoppingList()}>Add to Shopping List</button>
                     <p className="recipe-text">{recipe.instructions}</p>
 
                 </div>

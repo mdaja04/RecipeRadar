@@ -17,7 +17,6 @@ const RecipeCardPage = () => {
     const[profileImage, setProfileImage] = useState();
 
 
-
     useEffect(() => {
 
         const fetchRecipeUserData = async () => {
@@ -56,8 +55,23 @@ const RecipeCardPage = () => {
         navigate(`/${username}`, {state: {user}});
     }
 
-    function addToShoppingList() {
-        return undefined;
+    const addToShoppingList = async () => {
+        console.log(ingredients);
+
+        const response = await fetch("http://localhost:8080/shopping-list/add", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify({username: username, items: ingredients} )
+        })
+        if(response.ok){
+            alert("Ingredients successfully added to shopping list!")
+        }
+        else{
+            alert("Failed to add ingredients to shopping list");
+        }
     }
 
     return (
@@ -88,7 +102,7 @@ const RecipeCardPage = () => {
                             <li key={index}>{ingredient}</li>
                         ))}
                     </ul>
-                    <button className="submit-button" onClick={addToShoppingList()}>Add to Shopping List</button>
+                    <button className="submit-button" onClick={addToShoppingList}>Add to Shopping List</button>
                     <p className="recipe-text">{recipe.instructions}</p>
 
                 </div>

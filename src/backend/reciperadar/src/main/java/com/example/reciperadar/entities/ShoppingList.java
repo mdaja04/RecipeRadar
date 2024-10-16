@@ -28,6 +28,7 @@ public class ShoppingList {
     private String username;
 
     @ElementCollection
+    @CollectionTable(name = "shopping_list_items", joinColumns = @JoinColumn(name = "shopping_list_id"))
     private List<String> shoppingListItems = new ArrayList<>();
 
     public ShoppingList(String username) {

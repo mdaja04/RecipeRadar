@@ -1,8 +1,6 @@
 package com.example.reciperadar.controllers;
 
-import com.example.reciperadar.dto.AddFavouriteDto;
-import com.example.reciperadar.dto.AddItemDto;
-import com.example.reciperadar.entities.Favourites;
+import com.example.reciperadar.dto.AddItemsDto;
 import com.example.reciperadar.entities.ShoppingList;
 import com.example.reciperadar.services.ShoppingListService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +20,8 @@ public class ShoppingListController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addItem(@RequestBody AddItemDto data){
-        ShoppingList updatedShoppingList = shoppingListService.addShoppingListItem(data.getUsername(), data.getItem());
+    public ResponseEntity<?> addItems(@RequestBody AddItemsDto data){
+        ShoppingList updatedShoppingList = shoppingListService.addShoppingListItems(data.getUsername(), data.getItems());
         return ResponseEntity.ok(updatedShoppingList);
     }
 

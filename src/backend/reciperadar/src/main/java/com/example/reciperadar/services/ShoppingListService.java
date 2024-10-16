@@ -27,12 +27,13 @@ public class ShoppingListService {
         return shoppingList.getShoppingListItems();
     }
 
-    public ShoppingList addShoppingListItem(String username, String item){
+    public ShoppingList addShoppingListItems(String username, List<String> items){
         ShoppingList shoppingList = shoppingListRepository.findByUsername(username);
         if(shoppingList == null){
             shoppingList = new ShoppingList(username);
         }
-        shoppingList.getShoppingListItems().add(item);
+
+        shoppingList.getShoppingListItems().addAll(items);
         return shoppingListRepository.save(shoppingList);
     }
 

@@ -32,7 +32,7 @@ public class ShoppingListController {
     }
 
     @DeleteMapping("/delete/{username}/{item}")
-    public ResponseEntity<?> deleteFavourite(@PathVariable String username, @PathVariable String item){
+    public ResponseEntity<?> deleteItem(@PathVariable String username, @PathVariable String item){
         ShoppingList updatedShoppingList = shoppingListService.deleteShoppingListItem(username, item);
         return ResponseEntity.ok(updatedShoppingList);
     }

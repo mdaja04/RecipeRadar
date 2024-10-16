@@ -14,6 +14,7 @@ import Favourites from "./pages/Favourites";
 import Settings from "./pages/Settings"
 import EditRecipe from "./pages/EditRecipe";
 import UserRecipes from "./pages/UserRecipes";
+import ShoppingList from "./pages/ShoppingList";
 
 const App = () => {
     return (
@@ -32,6 +33,7 @@ const App = () => {
                 <Route path="/my-recipes" element={<ProtectedRoute><MyRecipes/></ProtectedRoute>}/>
                 <Route path="/recipe/*" element={<ProtectedRoute><RecipeCardPage/></ProtectedRoute>}/>
                 <Route path="/favourites" element={<ProtectedRoute><Favourites/></ProtectedRoute>}/>
+                <Route path="/shopping-list" element={<ProtectedRoute><ShoppingList/></ProtectedRoute>}/>
 
             </Routes>
         </Router>

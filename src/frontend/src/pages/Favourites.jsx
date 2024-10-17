@@ -11,7 +11,7 @@ const Favourites = () => {
     useEffect(() => {
         const getFavouriteRecipes = async () => {
             try {
-                const usernameResponse = await fetch("http://localhost:8080/users/me", {
+                const usernameResponse = await fetch("https://reciperadar-e0s5.onrender.com/users/me", {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -20,7 +20,7 @@ const Favourites = () => {
                 const userData = await usernameResponse.json();
                 setUsername(userData.username);
 
-                const favouriteIdsResponse = await fetch(`http://localhost:8080/favourites/${userData.username}`, {
+                const favouriteIdsResponse = await fetch(`https://reciperadar-e0s5.onrender.com/favourites/${userData.username}`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -40,7 +40,7 @@ const Favourites = () => {
         const fetchFavouriteRecipes = async () => {
             if (recipeIds && recipeIds.length > 0) {
                 try {
-                    const favouriteRecipesResponse = await fetch("http://localhost:8080/recipes/favourites", {
+                    const favouriteRecipesResponse = await fetch("https://reciperadar-e0s5.onrender.com/recipes/favourites", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const Favourites = () => {
 
         if(confirmed){
             try {
-                const response = await fetch(`http://localhost:8080/favourites/delete/${username}/${recipe.id}`, {
+                const response = await fetch(`https://reciperadar-e0s5.onrender.com/favourites/delete/${username}/${recipe.id}`, {
                     method: "DELETE",
                     headers: {
                         'Content-Type': 'application/json',

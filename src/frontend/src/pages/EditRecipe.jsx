@@ -19,7 +19,7 @@ const EditRecipe = () => {
     useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/me", {
+                const response = await fetch("https://reciperadar-e0s5.onrender.com/users/me", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ const EditRecipe = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/recipes/edit", {
+            const response = await fetch("https://reciperadar-e0s5.onrender.com/recipes/edit", {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`  // Include the JWT in the Authorization header
@@ -102,7 +102,7 @@ const EditRecipe = () => {
         const confirmed = window.confirm("Are you sure you want to delete your recipe?");
         if (confirmed) {
             try {
-                const response = await fetch(`http://localhost:8080/recipes/delete/${recipeId}`, {
+                const response = await fetch(`https://reciperadar-e0s5.onrender.com/recipes/delete/${recipeId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`,

@@ -19,7 +19,7 @@ const Home = () => {
 
     const search = async (query) => {
         try {
-            const response = await fetch(`http://localhost:8080/recipes/search?searchQuery=${query}`, {
+            const response = await fetch(`https://reciperadar-e0s5.onrender.com/recipes/search?searchQuery=${query}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
             });
             const data = await response.json();
@@ -31,7 +31,7 @@ const Home = () => {
 
     const fetchRandomRecipes = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/recipes/random?limit=10`, {
+            const response = await fetch(`https://reciperadar-e0s5.onrender.com/recipes/random?limit=10`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` }
             });
             const newRecipes = await response.json();

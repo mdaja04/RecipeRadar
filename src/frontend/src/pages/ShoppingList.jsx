@@ -12,7 +12,7 @@ const ShoppingList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const usernameResponse = await fetch(`http://localhost:8080/users/me`, {
+                const usernameResponse = await fetch(`https://reciperadar-e0s5.onrender.com/users/me`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
                 const userData = await usernameResponse.json();
@@ -30,7 +30,7 @@ const ShoppingList = () => {
 
     const fetchItems = async (username) => {
         try {
-            const response = await fetch(`http://localhost:8080/shopping-list/${username}`, {
+            const response = await fetch(`https://reciperadar-e0s5.onrender.com/shopping-list/${username}`, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
             });
             setItems(await response.json());
@@ -41,7 +41,7 @@ const ShoppingList = () => {
 
     const removeItem = async (item) => {
         try{
-            const response = await fetch(`http://localhost:8080/shopping-list/delete/${username}/${item}`, {
+            const response = await fetch(`https://reciperadar-e0s5.onrender.com/shopping-list/delete/${username}/${item}`, {
                 method: "DELETE",
                 headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
             })

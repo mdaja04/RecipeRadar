@@ -12,7 +12,7 @@ const FavouriteButton = ({recipeId, username}) => {
                 recipeId
             }
 
-            const response = await fetch("http://localhost:8080/favourites/add", {
+            const response = await fetch("https://reciperadar-e0s5.onrender.com/favourites/add", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

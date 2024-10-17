@@ -30,7 +30,7 @@ const CreateRecipe = () => {
     useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/me", {
+                const response = await fetch("https://reciperadar-e0s5.onrender.com/users/me", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ const CreateRecipe = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/recipes/create", {
+            const response = await fetch("https://reciperadar-e0s5.onrender.com/recipes/create", {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`  // Include the JWT in the Authorization header

@@ -28,7 +28,7 @@ const FinalPageSignUp = () => {
         try {
             console.log(userData);
             // Send registration data to the backend
-            const response = await fetch('http://localhost:8080/auth/signup', {
+            const response = await fetch('https://reciperadar-e0s5.onrender.com/auth/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

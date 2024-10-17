@@ -21,7 +21,7 @@ const RecipeCardPage = () => {
 
         const fetchRecipeUserData = async () => {
             try{
-                const response = await fetch(`http://localhost:8080/users/${recipe.username}`, {
+                const response = await fetch(`https://reciperadar-e0s5.onrender.com/users/${recipe.username}`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
                 const userData = await response.json();
@@ -35,7 +35,7 @@ const RecipeCardPage = () => {
         }
         const fetchData = async () => {
             try {
-                const usernameResponse = await fetch(`http://localhost:8080/users/me`, {
+                const usernameResponse = await fetch(`https://reciperadar-e0s5.onrender.com/users/me`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
 
@@ -58,7 +58,7 @@ const RecipeCardPage = () => {
     const addToShoppingList = async () => {
         console.log(ingredients);
 
-        const response = await fetch("http://localhost:8080/shopping-list/add", {
+        const response = await fetch("https://reciperadar-e0s5.onrender.com/shopping-list/add", {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',

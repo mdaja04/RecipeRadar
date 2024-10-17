@@ -13,7 +13,7 @@ const MyRecipes = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const usernameResponse = await fetch("http://localhost:8080/users/me", {
+                const usernameResponse = await fetch("https://reciperadar-e0s5.onrender.com/users/me", {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
                 //if (!usernameResponse.ok) return navigate("/signin");
@@ -21,7 +21,7 @@ const MyRecipes = () => {
                 const userData = await usernameResponse.json();
                 setUsername(userData.username);
 
-                const recipesResponse = await fetch(`http://localhost:8080/recipes/${userData.username}`, {
+                const recipesResponse = await fetch(`https://reciperadar-e0s5.onrender.com/recipes/${userData.username}`, {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem("token")}` },
                 });
                 const recipesData = await recipesResponse.json();

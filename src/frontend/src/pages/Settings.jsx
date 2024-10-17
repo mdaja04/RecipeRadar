@@ -16,7 +16,7 @@ const Settings = () => {
     useEffect(() => {
         const fetchUsername = async () => {
             try {
-                const response = await fetch("http://localhost:8080/users/me", {
+                const response = await fetch("https://reciperadar-e0s5.onrender.com/users/me", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const Settings = () => {
         formData.append("publicProfile", isPrivate);
 
         try{
-            const response = await fetch("http://localhost:8080/users/update", {
+            const response = await fetch("https://reciperadar-e0s5.onrender.com/users/update", {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem("token")}`,
@@ -102,7 +102,7 @@ const Settings = () => {
         const confirmed = window.confirm("Are you sure you want to delete your account? This action is irreversible.");
         if (confirmed){
             try{
-                const response = await fetch(`http://localhost:8080/users/delete`, {
+                const response = await fetch(`https://reciperadar-e0s5.onrender.com/users/delete`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`,

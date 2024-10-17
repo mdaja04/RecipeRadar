@@ -19,7 +19,7 @@ const Verify = () => {
             console.log(userData);
 
             // Send registration data to the backend
-            const response = await fetch('http://localhost:8080/auth/verify', {
+            const response = await fetch('https://reciperadar-e0s5.onrender.com/auth/verify', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -52,12 +52,12 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("https://recipe-radar-hm53g24ot-marvin-dajas-projects.vercel.app", "https://recipe-radar-five.vercel.app", "https://reciperadar-e0s5.onrender.com", "http://localhost:8080", "http://localhost:3000"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
-        configuration.setExposedHeaders(List.of("Authorization"));  // Expose Authorization header to the frontend
+        configuration.setExposedHeaders(List.of("Authorization"));
 
-        configuration.setAllowCredentials(true);  // Allow credentials (JWT, cookies)
+        configuration.setAllowCredentials(true); 
 
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

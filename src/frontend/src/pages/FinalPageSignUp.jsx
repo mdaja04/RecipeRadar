@@ -26,7 +26,6 @@ const FinalPageSignUp = () => {
             username
         };
         try {
-            console.log(userData);
             // Send registration data to the backend
             const response = await fetch('https://reciperadar-e0s5.onrender.com/auth/signup', {
                 method: 'POST',

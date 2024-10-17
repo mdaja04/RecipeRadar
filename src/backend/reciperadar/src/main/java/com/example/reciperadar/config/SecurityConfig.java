@@ -51,7 +51,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("https://recipe-radar-five.vercel.app", "https://reciperadar-e0s5.onrender.com", "http://localhost:8080", "http://localhost:3000"));
+        configuration.setAllowedOrigins(List.of("https://recipe-radar-hm53g24ot-marvin-dajas-projects.vercel.app", "https://recipe-radar-five.vercel.app", "https://reciperadar-e0s5.onrender.com", "http://localhost:8080", "http://localhost:3000"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 
